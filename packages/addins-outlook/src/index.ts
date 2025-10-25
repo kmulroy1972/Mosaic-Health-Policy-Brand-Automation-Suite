@@ -1,5 +1,4 @@
-import { createTelemetryEnvelope } from '@mhp/shared-brand-core';
-import { createComponentContext } from '@mhp/shared-ui';
+import { createTelemetryEnvelope, getDefaultFeatureFlags } from '@mhp/shared-brand-core';
 
 export interface PolicyResult {
   allowSend: boolean;
@@ -9,11 +8,11 @@ export interface PolicyResult {
 
 export function evaluateRecipients(recipients: string[]): PolicyResult {
   const telemetry = createTelemetryEnvelope('outlook_onsend_action', 'outlook');
-  const context = createComponentContext();
+  const flags = getDefaultFeatureFlags();
   const hasExternal = recipients.some((recipient) => !recipient.endsWith('@mhp.com'));
 
   return {
-    allowSend: !hasExternal || context.flags.enablePdfA,
+    allowSend: !hasExternal || flags.enablePdfA,
     requiresJustification: hasExternal,
     correlationId: telemetry.tenantHash
   };

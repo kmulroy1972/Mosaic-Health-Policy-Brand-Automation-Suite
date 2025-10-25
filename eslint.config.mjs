@@ -1,11 +1,12 @@
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import pluginImport from 'eslint-plugin-import';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 
 export default [
   {
-    ignores: ['dist', 'coverage', 'node_modules', '.husky/_', '.pnpm-store']
+    ignores: ['dist', '**/dist/**', 'coverage', 'node_modules', '.husky/_', '.pnpm-store']
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.cjs', '**/*.mjs'],
@@ -20,7 +21,8 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      import: pluginImport
+      import: pluginImport,
+      'react-hooks': pluginReactHooks
     },
     rules: {
       'import/order': [
@@ -39,7 +41,9 @@ export default [
           argsIgnorePattern: '^_'
         }
       ],
-      '@typescript-eslint/explicit-module-boundary-types': 'off'
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn'
     }
   }
 ];

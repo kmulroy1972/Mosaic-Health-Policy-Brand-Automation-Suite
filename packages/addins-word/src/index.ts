@@ -1,5 +1,4 @@
-import { createTelemetryEnvelope } from '@mhp/shared-brand-core';
-import { createComponentContext } from '@mhp/shared-ui';
+import { createTelemetryEnvelope, getDefaultFeatureFlags } from '@mhp/shared-brand-core';
 
 export interface BrandApplicationResult {
   applied: boolean;
@@ -7,11 +6,11 @@ export interface BrandApplicationResult {
 }
 
 export function applyBrandPreview(): BrandApplicationResult {
-  const context = createComponentContext();
+  const flags = getDefaultFeatureFlags();
   const telemetry = createTelemetryEnvelope('brand_apply_preview', 'word');
   // Placeholder for future Word automation logic; currently returns deterministic stub values.
   return {
-    applied: context.flags.enablePdfA && telemetry.result === 'success',
+    applied: flags.enablePdfA && telemetry.result === 'success',
     timestamp: new Date().toISOString()
   };
 }

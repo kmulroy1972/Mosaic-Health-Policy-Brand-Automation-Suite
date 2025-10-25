@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["./main.ts", "./preview.tsx"],
+  "compilerOptions": {
+    "types": ["storybook__addons", "storybook__react"]
+  }
+}

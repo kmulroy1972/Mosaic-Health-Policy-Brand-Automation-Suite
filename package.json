@@ -12,7 +12,9 @@
     "format:write": "pnpm exec prettier --write .",
     "validate:inputs": "ts-node scripts/validate-inputs.ts",
     "validate:manifests": "ts-node scripts/validate-manifests.ts",
-    "verify": "pnpm lint && pnpm test && pnpm build && pnpm validate:manifests && pnpm validate:inputs"
+    "verify": "pnpm lint && pnpm test && pnpm build && pnpm validate:manifests && pnpm validate:inputs",
+    "storybook": "pnpm exec storybook dev -p 6006 -c packages/shared-ui/.storybook",
+    "storybook:build": "pnpm exec storybook build -c packages/shared-ui/.storybook"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,cjs,mjs}": [
@@ -26,6 +28,12 @@
   "devDependencies": {
     "@azure/functions": "^4.8.0",
     "@azure/identity": "^4.13.0",
+    "@storybook/addon-a11y": "^8.3.5",
+    "@storybook/addon-essentials": "^8.3.5",
+    "@storybook/addon-interactions": "^8.3.5",
+    "@storybook/react-vite": "^8.3.5",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.5",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^8.12.1",
@@ -36,6 +44,7 @@
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "lint-staged": "^15.2.9",
@@ -43,6 +52,9 @@
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
     "globals": "^15.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^8.3.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }

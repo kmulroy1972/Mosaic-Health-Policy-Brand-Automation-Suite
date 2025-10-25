@@ -11,7 +11,12 @@
       "require": "./dist/index.js"
     }
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "dependencies": {
-    "@mhp/shared-brand-core": "workspace:*"
+    "@mhp/shared-brand-core": "workspace:*",
+    "clsx": "^2.1.1"
   }
 }

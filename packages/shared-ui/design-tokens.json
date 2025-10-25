@@ -1,0 +1,54 @@
+{
+  "colors": {
+    "primary": "#003057",
+    "onPrimary": "#ffffff",
+    "accent": "#f6851f",
+    "onAccent": "#1d232a",
+    "background": "#f5f7fa",
+    "surface": "#ffffff",
+    "surfaceContrast": "#1d232a",
+    "muted": "#6b7a89",
+    "border": "#c8d1dc",
+    "success": "#1b6f3d",
+    "onSuccess": "#ffffff",
+    "warning": "#946200",
+    "onWarning": "#1d232a",
+    "danger": "#a30000",
+    "onDanger": "#ffffff",
+    "info": "#005a9e",
+    "onInfo": "#ffffff"
+  },
+  "spacing": {
+    "xs": "4px",
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "24px",
+    "xxl": "32px"
+  },
+  "radius": {
+    "sm": "4px",
+    "md": "8px",
+    "lg": "16px"
+  },
+  "typography": {
+    "fontFamily": "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+    "fontSizeXs": "12px",
+    "fontSizeSm": "14px",
+    "fontSizeMd": "16px",
+    "fontSizeLg": "20px",
+    "fontWeightRegular": 400,
+    "fontWeightSemiBold": 600,
+    "lineHeightTight": 1.25,
+    "lineHeightNormal": 1.5
+  },
+  "elevation": {
+    "sm": "0 1px 2px rgba(3, 15, 40, 0.08)",
+    "md": "0 4px 12px rgba(3, 15, 40, 0.12)"
+  },
+  "motion": {
+    "durationFast": "120ms",
+    "durationBase": "200ms",
+    "easingStandard": "cubic-bezier(0.2, 0, 0, 1)"
+  }
+}

@@ -9,5 +9,6 @@
     "outDir": "dist"
   },
   "references": [{ "path": "../shared-brand-core" }],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/stories/**/*"]
 }
