@@ -7,6 +7,8 @@
     "validate:inputs": "ts-node scripts/validate-inputs.ts"
   },
   "devDependencies": {
+    "@azure/functions": "^4.8.0",
+    "@azure/identity": "^4.13.0",
     "@types/node": "^20.11.20",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
