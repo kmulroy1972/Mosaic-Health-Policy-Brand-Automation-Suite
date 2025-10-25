@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+.env.*
+
+# pnpm state
+.pnpm-store/

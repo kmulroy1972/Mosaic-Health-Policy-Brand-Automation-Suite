@@ -1,0 +1,22 @@
+{
+  "brandKitPath": "/sites/org-assets/BrandKit",
+  "orgAssetsUrl": "https://contoso.sharepoint.com/sites/org-assets",
+  "allowedDomains": [
+    "mhp.com",
+    "contoso.com"
+  ],
+  "legalDisclaimerFile": "templates/legal-disclaimer.html",
+  "signatureHtmlFile": "templates/signatures/default.html",
+  "azureOpenAi": {
+    "resourceName": "mhp-openai",
+    "deployment": "mhp-gpt",
+    "region": "eastus"
+  },
+  "telemetry": {
+    "retentionDays": 30
+  },
+  "featureFlags": {
+    "enablePdfA": true,
+    "allowNonAzureAI": false
+  }
+}

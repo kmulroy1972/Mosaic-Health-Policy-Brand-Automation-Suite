@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mhp-brand-automation/config/inputs.schema.json",
+  "title": "Inputs Configuration",
+  "type": "object",
+  "required": [
+    "brandKitPath",
+    "orgAssetsUrl",
+    "allowedDomains",
+    "legalDisclaimerFile",
+    "signatureHtmlFile",
+    "azureOpenAi",
+    "telemetry",
+    "featureFlags"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "brandKitPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "orgAssetsUrl": {
+      "type": "string",
+      "format": "uri",
+      "minLength": 1
+    },
+    "allowedDomains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9.-]+$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "legalDisclaimerFile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "signatureHtmlFile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "azureOpenAi": {
+      "type": "object",
+      "required": [
+        "resourceName",
+        "deployment",
+        "region"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "resourceName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "deployment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "required": [
+        "retentionDays"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "retentionDays": {
+          "type": "integer",
+          "const": 30
+        }
+      }
+    },
+    "featureFlags": {
+      "type": "object",
+      "required": [
+        "enablePdfA",
+        "allowNonAzureAI"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "enablePdfA": {
+          "type": "boolean",
+          "const": true
+        },
+        "allowNonAzureAI": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    }
+  }
+}
