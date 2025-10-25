@@ -6,3 +6,4 @@ dist/
 
 # pnpm state
 .pnpm-store/
+**/tsconfig.tsbuildinfo

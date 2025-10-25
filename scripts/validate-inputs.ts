@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import process from 'process';
+
 import Ajv, { AnySchema, ErrorObject } from 'ajv';
 import addFormats from 'ajv-formats';
 
@@ -17,7 +18,9 @@ function readJson(filePath: string): unknown {
     const raw = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(raw);
   } catch (error) {
-    throw new Error(`Failed to read or parse JSON file at ${filePath}: ${(error as Error).message}`);
+    throw new Error(
+      `Failed to read or parse JSON file at ${filePath}: ${(error as Error).message}`
+    );
   }
 }
 

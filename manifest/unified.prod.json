@@ -1,0 +1,35 @@
+{
+  "manifestVersion": "1.18",
+  "version": "1.0.0.0",
+  "id": "8dc9ad76-0b0f-4c07-a595-445f9d9f9caa",
+  "type": "Universal",
+  "providerName": "MHP",
+  "defaultLocale": "en-US",
+  "displayName": {
+    "default": "MHP Brand Automation"
+  },
+  "description": {
+    "default": "Production manifest for the MHP Microsoft 365 add-ins suite."
+  },
+  "supportUrl": "https://mhp.example/support",
+  "webApplicationInfo": {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "resource": "api://mhp-brand-automation"
+  },
+  "extensions": [
+    {
+      "id": "brandAutomationTaskpane",
+      "type": "TaskPane",
+      "requirements": {
+        "capabilities": ["Word", "PowerPoint", "Mailbox"]
+      },
+      "resources": [
+        {
+          "id": "Taskpane.Url",
+          "type": "Url",
+          "resource": "https://cdn.mhp.com/assets/index.html"
+        }
+      ]
+    }
+  ]
+}

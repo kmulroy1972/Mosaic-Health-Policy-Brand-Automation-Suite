@@ -1,0 +1,11 @@
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './tests/e2e',
+  reporter: [['list'], ['html', { outputFolder: 'coverage/playwright', open: 'never' }]],
+  use: {
+    baseURL: 'https://localhost:3000',
+    headless: true,
+    ignoreHTTPSErrors: true
+  }
+});

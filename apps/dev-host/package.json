@@ -1,0 +1,14 @@
+{
+  "name": "@mhp/dev-host",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/server.js",
+  "types": "dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "require": "./dist/server.js"
+    }
+  }
+}

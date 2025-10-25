@@ -31,6 +31,7 @@
 - **Policy Checks**: Outlook On-send inspects recipient domains and keyword matches locally. Only sanitized summaries and correlation IDs are stored server-side.
 
 PHI/PII sensitive touch points are limited to:
+
 - Outlook draft body & attachments before policy enforcement.
 - Optional PDF conversion payloads.
 - AI rewrite requests when `piiMode=true` (must remain in Azure).
@@ -38,6 +39,7 @@ PHI/PII sensitive touch points are limited to:
 ## Content Security Policy (Task Panes)
 
 Taskpane pages served from `apps/dev-host` enforce CSP headers:
+
 - `default-src 'self' https://*.officeapps.live.com https://*.microsoftonline.com` (Office runtime + AAD)
 - `script-src 'self' 'nonce-{runtime}' https://*.officeapps.live.com`
 - `style-src 'self' 'unsafe-inline'` (only if nonce is not available for dynamic styles; otherwise prefer nonce-based injection)
@@ -45,7 +47,7 @@ Taskpane pages served from `apps/dev-host` enforce CSP headers:
 - `connect-src 'self' https://*.officeapps.live.com https://login.microsoftonline.com https://graph.microsoft.com https://{azureEndpoints}`
 - `font-src 'self' data:`
 - `frame-ancestors 'self' https://*.officeapps.live.com`
-Inline scripts are disallowed except for Office initialize shims with CSP nonces.
+  Inline scripts are disallowed except for Office initialize shims with CSP nonces.
 
 ## Offline Behavior & Caching
 

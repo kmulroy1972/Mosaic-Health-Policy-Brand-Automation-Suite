@@ -4,14 +4,45 @@
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "validate:inputs": "ts-node scripts/validate-inputs.ts"
+    "prepare": "husky install",
+    "build": "pnpm exec tsc -b tsconfig.build.json",
+    "test": "pnpm exec jest --passWithNoTests",
+    "lint": "pnpm exec eslint . --ext .ts,.tsx,.js,.cjs",
+    "format": "pnpm exec prettier --check .",
+    "format:write": "pnpm exec prettier --write .",
+    "validate:inputs": "ts-node scripts/validate-inputs.ts",
+    "validate:manifests": "ts-node scripts/validate-manifests.ts",
+    "verify": "pnpm lint && pnpm test && pnpm build && pnpm validate:manifests && pnpm validate:inputs"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs,mjs}": [
+      "pnpm exec prettier --write",
+      "pnpm exec eslint --max-warnings=0 --fix"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "pnpm exec prettier --write"
+    ]
   },
   "devDependencies": {
     "@azure/functions": "^4.8.0",
     "@azure/identity": "^4.13.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
+    "@typescript-eslint/eslint-plugin": "^8.12.1",
+    "@typescript-eslint/parser": "^8.12.1",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
+    "axe-core": "^4.10.0",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "lint-staged": "^15.2.9",
+    "playwright": "^1.48.2",
+    "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
+    "globals": "^15.9.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }

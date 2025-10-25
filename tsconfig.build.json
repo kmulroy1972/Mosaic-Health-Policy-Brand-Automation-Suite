@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/shared-brand-core" },
+    { "path": "./packages/shared-ui" },
+    { "path": "./packages/addins-word" },
+    { "path": "./packages/addins-ppt" },
+    { "path": "./packages/addins-outlook" },
+    { "path": "./packages/backend-functions" },
+    { "path": "./apps/dev-host" }
+  ]
+}

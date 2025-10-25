@@ -43,11 +43,7 @@
     },
     "azureOpenAi": {
       "type": "object",
-      "required": [
-        "resourceName",
-        "deployment",
-        "region"
-      ],
+      "required": ["resourceName", "deployment", "region"],
       "additionalProperties": false,
       "properties": {
         "resourceName": {
@@ -66,9 +62,7 @@
     },
     "telemetry": {
       "type": "object",
-      "required": [
-        "retentionDays"
-      ],
+      "required": ["retentionDays"],
       "additionalProperties": false,
       "properties": {
         "retentionDays": {
@@ -79,10 +73,7 @@
     },
     "featureFlags": {
       "type": "object",
-      "required": [
-        "enablePdfA",
-        "allowNonAzureAI"
-      ],
+      "required": ["enablePdfA", "allowNonAzureAI"],
       "additionalProperties": false,
       "properties": {
         "enablePdfA": {
