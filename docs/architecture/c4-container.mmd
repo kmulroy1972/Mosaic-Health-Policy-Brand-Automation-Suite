@@ -1,0 +1,73 @@
+C4Container
+  title MHP Brand Automation - Container View
+
+  Person(user, "Knowledge Worker", "Creates branded documents, presentations, and emails.")
+
+  Container_Boundary(clients, "Office Clients") {
+    Container(wordAddin, "Word Add-in", "TypeScript + Office.js", "Applies brand styles, accessibility remediation, PDF export orchestration.")
+    Container(pptAddin, "PowerPoint Add-in", "TypeScript + Office.js", "Synchronizes slide masters, enforces layouts, accessibility fixes.")
+    Container(outlookAddin, "Outlook Add-in", "TypeScript + Office.js", "On-send policies, signature/disclaimer injection, AI rewrite UI.")
+  }
+
+  Container(sharedUi, "Shared UI", "React Library", "Accessible components, design tokens, first-run tour.")
+  Container(sharedCore, "Shared Brand Core", "TypeScript Library", "Graph client, telemetry, feature flags, caching, AI guardrails.")
+
+  Container_Boundary(functions, "Azure Functions") {
+    Container(funcTemplates, "Templates API", "Node.js Azure Function", "Lists official templates from Org Assets via Graph delta cache.")
+    Container(funcPdf, "PDF Service", "Node.js Azure Function", "Optional PDF/A conversion & accessibility validation (VeraPDF/Ghostscript).")
+    Container(funcAi, "AI Rewrite Service", "Node.js Azure Function", "Brand-safe rewriting via Azure OpenAI; rejects PHI if non-Azure route.")
+    Container(funcGraph, "Graph Proxy", "Node.js Azure Function", "Centralized Graph access with throttling resilience and token exchange.")
+  }
+
+  ContainerDb(idb, "IndexedDB", "Browser Storage", "Client caches: templates, undo snapshots, tour completion, telemetry queue.")
+
+  System_Ext(officeRuntime, "Office Runtime", "Office JS host environment.")
+  System_Ext(msGraph, "Microsoft Graph", "Graph APIs for files, sites, mail.")
+  System_Ext(orgAssets, "SharePoint Org Assets", "Official MHP brand templates.")
+  System_Ext(keyVault, "Azure Key Vault", "Secrets and certificates for backend functions.")
+  System_Ext(appConfig, "Azure App Configuration", "Feature flags and environment config.")
+  System_Ext(appInsights, "Azure Application Insights", "Telemetry storage (PII-scrubbed).")
+  System_Ext(azureOpenAi, "Azure OpenAI", "Approved region deployment for rewrite scenarios.")
+
+  Rel(user, wordAddin, "Invokes", "Office.js")
+  Rel(user, pptAddin, "Invokes", "Office.js")
+  Rel(user, outlookAddin, "Invokes", "Office.js")
+
+  Rel(wordAddin, sharedUi, "Uses components", "ES modules")
+  Rel(pptAddin, sharedUi, "Uses components", "ES modules")
+  Rel(outlookAddin, sharedUi, "Uses components", "ES modules")
+
+  Rel(wordAddin, sharedCore, "Calls Graph/PDF helpers", "TypeScript APIs")
+  Rel(pptAddin, sharedCore, "Calls Graph helpers", "TypeScript APIs")
+  Rel(outlookAddin, sharedCore, "Uses telemetry & policy helpers", "TypeScript APIs")
+
+  Rel(sharedCore, funcGraph, "Delegates Graph requests", "HTTPS + SSO tokens")
+  Rel(sharedCore, funcTemplates, "Fetches templates", "HTTPS")
+  Rel(sharedCore, funcPdf, "Requests PDF/A conversion", "HTTPS (PHI-aware)")
+  Rel(sharedCore, funcAi, "Requests rewrite", "HTTPS (PII redacted)")
+
+  Rel(funcGraph, msGraph, "Calls Graph APIs", "OAuth 2.0 OBO")
+  Rel(funcTemplates, orgAssets, "Reads templates", "Graph delegated access")
+  Rel(funcPdf, keyVault, "Retrieves secrets", "Managed identity")
+  Rel(funcAi, keyVault, "Retrieves secrets", "Managed identity")
+  Rel(funcGraph, keyVault, "Retrieves secrets", "Managed identity")
+  Rel(funcTemplates, appConfig, "Reads feature flags", "Managed identity")
+  Rel(funcPdf, appConfig, "Reads feature flags", "Managed identity")
+  Rel(funcAi, appConfig, "Reads feature flags", "Managed identity")
+  Rel(sharedCore, idb, "Caches state", "IndexedDB API")
+  Rel(outlookAddin, funcPdf, "Uploads for validation", "HTTPS (PHI-controlled)")
+  Rel(outlookAddin, funcAi, "Submits rewrite requests", "HTTPS (Azure only when PHI)")
+
+  Rel(wordAddin, appInsights, "Sends telemetry", "HTTPS (hashed IDs)")
+  Rel(pptAddin, appInsights, "Sends telemetry", "HTTPS (hashed IDs)")
+  Rel(outlookAddin, appInsights, "Sends telemetry", "HTTPS (hashed IDs)")
+  Rel(funcTemplates, appInsights, "Pushes operational logs", "Azure Monitor SDK")
+  Rel(funcPdf, appInsights, "Pushes operational logs", "Azure Monitor SDK")
+  Rel(funcAi, appInsights, "Pushes operational logs", "Azure Monitor SDK")
+  Rel(funcGraph, appInsights, "Pushes operational logs", "Azure Monitor SDK")
+
+  Rel(funcAi, azureOpenAi, "Invokes model", "Azure OpenAI API (no PHI leakage)")
+
+  Rel(wordAddin, officeRuntime, "Runs within", "Office host")
+  Rel(pptAddin, officeRuntime, "Runs within", "Office host")
+  Rel(outlookAddin, officeRuntime, "Runs within", "Office host")

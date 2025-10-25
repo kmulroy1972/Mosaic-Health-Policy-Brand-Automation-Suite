@@ -1,0 +1,78 @@
+%% Mermaid system diagram for MHP Brand Automation suite
+flowchart LR
+  %% Client-side add-ins
+  subgraph Clients [Office Clients]
+    W[Word Add-in]
+    P[PowerPoint Add-in]
+    O[Outlook Add-in]
+  end
+
+  subgraph SharedPackages [Shared Packages]
+    SBC[Shared Brand Core]
+    SUI[Shared UI Library]
+  end
+
+  subgraph Functions [Azure Functions]
+    FTemplate[Template Service]
+    FPDF[PDF Service]
+    FAI[AI Rewrite Service]
+    FGraph[Graph Proxy]
+  end
+
+  Entra[Entra ID
+  Nested App Auth]
+  OBO[OAuth OBO Flow]
+  Graph[Microsoft Graph]
+  OrgAssets[SharePoint
+  Org Assets]
+  KeyVault[Key Vault]
+  AppConfig[App Config]
+  AppInsights[App Insights]
+
+  %% Client interactions
+  W --> SBC
+  W --> SUI
+  P --> SBC
+  P --> SUI
+  O --> SBC
+  O --> SUI
+
+  %% Authentication
+  Clients -. SSO tokens .-> Entra
+  OBO -. delegated tokens .-> Entra
+
+  %% Backend invocations
+  W -->|Template Picker| FTemplate
+  P -->|Template Picker| FTemplate
+  W -->|PDF Export (fallback)| FPDF
+  P -->|PDF Export (fallback)| FPDF
+  O -->|On-send policy| FGraph
+  O -->|Brand-safe rewrite| FAI
+
+  %% Backend dependencies
+  FTemplate -->|Delta cache| FGraph
+  FGraph --> Graph
+  FTemplate --> OrgAssets
+  FPDF --> KeyVault
+  FPDF --> AppConfig
+  FAI --> KeyVault
+  FAI --> AppConfig
+  FAI --> Graph
+
+  %% Telemetry
+  Clients -->|PII-scrubbed events| AppInsights
+  Functions -->|PII-scrubbed events| AppInsights
+
+  %% Secrets & config
+  FTemplate --> KeyVault
+  FGraph --> KeyVault
+  Functions --> AppConfig
+
+  %% PHI/PII handling
+  O -->|PII evaluated| FAI
+  O -->|Policy evaluation| FGraph
+  FPDF -->|Optional PDF/A conversion| AppConfig
+
+  %% Notes
+  classDef phi fill:#ffe0e0,stroke:#cc0000,color:#000;
+  class O,FGraph,FAI phi;
