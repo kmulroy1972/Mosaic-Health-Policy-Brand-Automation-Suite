@@ -15,5 +15,11 @@ export const enMessages: MessageDictionary = {
   'tour.finish': 'Finish tour',
   'toggle.on': 'On',
   'toggle.off': 'Off',
-  'tag.remove': 'Remove'
+  'tag.remove': 'Remove',
+  'templates.search.label': 'Filter templates',
+  'templates.search.placeholder': 'Search templates',
+  'templates.preview': 'Preview template',
+  'templates.applying': 'Applying...',
+  'templates.apply': 'Apply',
+  'templates.empty': 'No templates match your search.'
 };

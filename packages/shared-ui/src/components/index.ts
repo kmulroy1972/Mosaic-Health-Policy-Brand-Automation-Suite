@@ -9,3 +9,4 @@ export * from './Toggle';
 export * from './Dropdown';
 export * from './Tag';
 export * from './FirstRunTour';
+export * from './TemplatePicker';
