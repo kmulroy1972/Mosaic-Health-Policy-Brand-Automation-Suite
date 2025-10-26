@@ -426,6 +426,29 @@ select.mhp-dropdown {
   border-radius: var(--mhp-radius-md);
 }
 
+.mhp-pdf-panel {
+  display: grid;
+  gap: var(--mhp-spacing-lg);
+  padding: var(--mhp-spacing-lg);
+  border: 1px solid var(--mhp-colors-border);
+  border-radius: var(--mhp-radius-lg);
+  background: var(--mhp-colors-surface);
+}
+
+.mhp-pdf-panel header h3 {
+  margin: 0;
+}
+
+.mhp-pdf-panel header p {
+  margin: var(--mhp-spacing-xs) 0 0;
+  color: var(--mhp-colors-muted);
+}
+
+.mhp-pdf-panel__options {
+  display: grid;
+  gap: var(--mhp-spacing-sm);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mhp-btn,
   .mhp-progress__bar,

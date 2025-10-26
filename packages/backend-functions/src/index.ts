@@ -17,3 +17,5 @@ export function createHealthResponse(): HttpResult<{ status: string }> {
 
 export { templatesHttpTrigger } from './templates/httpTrigger';
 export type { TemplateResponse, TemplateItem } from './templates/types';
+export { convertPdfAHttpTrigger } from './pdf/convertA';
+export { validatePdfHttpTrigger } from './pdf/validate';

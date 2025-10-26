@@ -21,5 +21,11 @@ export const enMessages: MessageDictionary = {
   'templates.preview': 'Preview template',
   'templates.applying': 'Applying...',
   'templates.apply': 'Apply',
-  'templates.empty': 'No templates match your search.'
+  'templates.empty': 'No templates match your search.',
+  'pdf.panel.title': 'Export to PDF',
+  'pdf.panel.subtitle': 'Select options for accessible export',
+  'pdf.panel.pdfa': 'Convert to PDF/A-2b',
+  'pdf.panel.validate': 'Validate accessibility (PDF/UA & PDF/A)',
+  'pdf.panel.export': 'Export PDF',
+  'pdf.panel.exporting': 'Exporting...'
 };
