@@ -5,6 +5,17 @@ on:
     tags:
       - 'v*.*.*'
 
+env:
+  AZURE_FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
+  CDN_URL: ${{ secrets.CDN_URL }}
+  STORAGE_ACCOUNT_URL: ${{ secrets.STORAGE_ACCOUNT_URL }}
+  TENANT_ID: ${{ secrets.TENANT_ID }}
+  CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  KEYVAULT_URI: ${{ secrets.KEYVAULT_URI }}
+  APP_CONFIG_CONNECTION: ${{ secrets.APP_CONFIG_CONNECTION }}
+  APPINSIGHTS_CONNECTION: ${{ secrets.APPINSIGHTS_CONNECTION }}
+
 jobs:
   package-release:
     runs-on: ubuntu-latest
@@ -21,8 +32,15 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm build
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Package artifacts
         run: pnpm deploy:package
+      - name: Deploy to Azure
+        shell: pwsh
+        run: ./scripts/deployment/deploy-azure.ps1
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
