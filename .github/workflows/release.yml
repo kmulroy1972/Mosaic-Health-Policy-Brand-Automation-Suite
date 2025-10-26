@@ -40,7 +40,13 @@ jobs:
         run: pnpm deploy:package
       - name: Deploy to Azure
         shell: pwsh
-        run: ./scripts/deployment/deploy-azure.ps1
+        run: |
+          ./scripts/deployment/deploy-azure.ps1 `
+            -Environment prod `
+            -ResourceGroup mhp-brand-rg `
+            -StaticSiteName mhpbrandstatic `
+            -FunctionsApp mhpbrandfunctions38e5971a `
+            -StorageAccount mhpbrandstorage38e5971a
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
