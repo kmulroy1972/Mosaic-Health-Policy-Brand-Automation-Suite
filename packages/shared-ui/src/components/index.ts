@@ -11,3 +11,4 @@ export * from './Tag';
 export * from './FirstRunTour';
 export * from './TemplatePicker';
 export * from './PdfExportPanel';
+export * from './BrandSafeRewritePanel';

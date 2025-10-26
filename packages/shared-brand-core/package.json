@@ -10,5 +10,8 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.js"
     }
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0"
   }
 }

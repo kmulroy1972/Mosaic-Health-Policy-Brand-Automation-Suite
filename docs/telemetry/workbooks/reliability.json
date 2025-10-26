@@ -1,0 +1,49 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/Application-Insights-Workbooks/master/Workbooks/Schema/Workbooks.json",
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## Reliability & Error Taxonomy\nMonitor failure trends, throttling, and backoff efficiency."
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "title": "Error Rate by Category",
+        "query": "customEvents\n| where tostring(customDimensions['result']) == 'failure'\n| summarize failures=count(), affectedTenants=dcount(tostring(customDimensions.tenantHash)) by errorCategory=tostring(customDimensions['errorCategory'])\n| order by failures desc",
+        "size": 1
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "title": "Throttled Requests Over Time",
+        "query": "customEvents\n| where tostring(customDimensions['errorCategory']) == 'Throttled'\n| summarize throttled=count() by bin(timestamp, 15m)\n| render timechart",
+        "size": 1
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "title": "Graph Delta Sync Duration",
+        "query": "customEvents\n| where name == 'backend_templates_sync'\n| summarize p50=percentile(todouble(customDimensions['elapsedMs']), 50), p95=percentile(todouble(customDimensions['elapsedMs']), 95) by bin(timestamp, 1h)\n| render timechart",
+        "size": 1
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "title": "PDF Validation Outcomes",
+        "query": "customEvents\n| where name == 'backend_pdf_validate'\n| summarize passed=sum(if(tobool(customDimensions['pdfua.passed']),1,0)), warnings=sum(if(tostring(customDimensions['result'])=='warnings',1,0)), failed=sum(if(tostring(customDimensions['result'])=='failure',1,0)) by bin(timestamp, 1d)",
+        "size": 1,
+        "visualization": "timechart"
+      }
+    }
+  ]
+}

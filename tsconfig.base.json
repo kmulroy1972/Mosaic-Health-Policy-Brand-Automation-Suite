@@ -10,6 +10,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"]
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
+    "paths": {
+      "@mhp/shared-brand-core": ["packages/shared-brand-core/src/index.ts"],
+      "@mhp/shared-ui": ["packages/shared-ui/src/index.ts"]
+    }
   }
 }

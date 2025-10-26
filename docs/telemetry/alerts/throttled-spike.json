@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-03-01/alertRules.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appInsightsResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource ID of the Application Insights instance"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "microsoft.insights/scheduledqueryrules",
+      "apiVersion": "2023-09-01-preview",
+      "name": "mhp-throttled-spike",
+      "location": "global",
+      "properties": {
+        "description": "Alerts when throttled events exceed baseline.",
+        "enabled": true,
+        "evaluationFrequency": "PT5M",
+        "windowSize": "PT15M",
+        "severity": 3,
+        "autoMitigate": true,
+        "scopes": ["[parameters('appInsightsResourceId')]"],
+        "targetResourceTypes": ["microsoft.insights/components"],
+        "criteria": {
+          "allOf": [
+            {
+              "query": "customEvents\n| where timestamp > ago(15m) and tostring(customDimensions['errorCategory']) == 'Throttled'\n| summarize throttled=count()",
+              "timeAggregation": "Total",
+              "operator": "GreaterThan",
+              "threshold": 20
+            }
+          ]
+        },
+        "actions": []
+      }
+    }
+  ]
+}

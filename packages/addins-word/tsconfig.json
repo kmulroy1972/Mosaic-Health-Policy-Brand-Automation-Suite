@@ -10,5 +10,5 @@
     "types": ["office-js"]
   },
   "references": [{ "path": "../shared-brand-core" }, { "path": "../shared-ui" }],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

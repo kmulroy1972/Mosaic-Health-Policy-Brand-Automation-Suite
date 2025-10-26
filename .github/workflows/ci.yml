@@ -24,7 +24,11 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Unit tests
-        run: pnpm test
+        run: pnpm test:unit
+      - name: Accessibility smoke
+        run: MHP_A11Y=true pnpm test:a11y
+        env:
+          CI: true
       - name: Build TypeScript projects
         run: pnpm build
       - name: Validate manifests

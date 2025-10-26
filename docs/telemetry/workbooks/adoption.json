@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/Application-Insights-Workbooks/master/Workbooks/Schema/Workbooks.json",
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## MHP Adoption Dashboard\nTrack key usage signals across Word, PowerPoint, Outlook, and PDF tooling."
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "customEvents\n| where name in ('brand_apply','ppt_fix','outlook_onsend_action','pdf_export','ai_rewrite')\n| summarize events=count(), tenants=dcount(tostring(customDimensions.tenantHash)), users=dcount(tostring(customDimensions.userHash)) by name\n| order by events desc",
+        "size": 1,
+        "timeContext": {
+          "durationMs": 604800000
+        },
+        "title": "Event Volume (7 days)",
+        "showAnalytics": true
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "customEvents\n| where name == 'pdf_export'\n| extend pdfaSelected = tobool(customDimensions['pdfaSelected'])\n| summarize total=count(), pdfaCount=sum(toint(pdfaSelected)) by bin(timestamp, 1d)\n| extend pdfaRate = iif(total == 0, 0, todouble(pdfaCount) / todouble(total))\n| project timestamp, total, pdfaRate",
+        "visualization": "timechart",
+        "size": 1,
+        "title": "PDF/A Selection Rate"
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "customEvents\n| where name == 'ai_rewrite'\n| summarize total=count(), piiEnabled=sum(toint(tobool(customDimensions['piiMode']))) by bin(timestamp, 1d)\n| extend piiRate = todouble(piiEnabled) / todouble(total)\n| project timestamp, total, piiRate",
+        "visualization": "timechart",
+        "title": "AI Rewrite Usage (PII Mode)",
+        "size": 1
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "customEvents\n| where name == 'outlook_onsend_action'\n| summarize overrides=sum(if(customDimensions['policyOutcome']=='override',1,0)), blocked=sum(if(customDimensions['policyOutcome']=='blocked',1,0)), total=count() by bin(timestamp, 1d)\n| extend overrideRate = todouble(overrides)/todouble(total), blockRate = todouble(blocked)/todouble(total)\n| project timestamp, total, overrideRate, blockRate",
+        "visualization": "timechart",
+        "title": "On-Send Policy Outcomes",
+        "size": 1
+      }
+    }
+  ]
+}

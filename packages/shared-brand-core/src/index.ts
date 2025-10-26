@@ -1,3 +1,8 @@
+export * from './ai';
+export * from './aiClient';
+export * from './graphClient';
+export * from './telemetry';
+
 export type FeatureFlagSnapshot = {
   enablePdfA: boolean;
   allowNonAzureAI: boolean;
@@ -11,6 +16,8 @@ export interface TelemetryEnvelope {
   elapsedMs: number;
   result: 'success' | 'failure';
   featureFlags: FeatureFlagSnapshot;
+  errorCategory?: string;
+  correlationId?: string;
 }
 
 const defaultFlags: FeatureFlagSnapshot = {
@@ -24,15 +31,18 @@ export function getDefaultFeatureFlags(): FeatureFlagSnapshot {
 
 export function createTelemetryEnvelope(
   eventName: TelemetryEnvelope['eventName'],
-  host: TelemetryEnvelope['host']
+  host: TelemetryEnvelope['host'],
+  overrides: Partial<Omit<TelemetryEnvelope, 'eventName' | 'host'>> = {}
 ): TelemetryEnvelope {
   return {
     eventName,
-    tenantHash: 'anonymous',
-    userHash: 'anonymous',
     host,
-    elapsedMs: 0,
-    result: 'success',
-    featureFlags: getDefaultFeatureFlags()
+    tenantHash: overrides.tenantHash ?? 'anonymous',
+    userHash: overrides.userHash ?? 'anonymous',
+    elapsedMs: overrides.elapsedMs ?? 0,
+    result: overrides.result ?? 'success',
+    featureFlags: overrides.featureFlags ?? getDefaultFeatureFlags(),
+    errorCategory: overrides.errorCategory,
+    correlationId: overrides.correlationId
   };
 }

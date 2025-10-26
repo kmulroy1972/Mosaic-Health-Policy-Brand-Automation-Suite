@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-03-01/alertRules.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appInsightsResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource ID of the Application Insights instance"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "microsoft.insights/scheduledqueryrules",
+      "apiVersion": "2023-09-01-preview",
+      "name": "mhp-error-rate-high",
+      "location": "global",
+      "properties": {
+        "description": "Triggers when overall failure rate exceeds 2% over 15 minutes.",
+        "enabled": true,
+        "evaluationFrequency": "PT5M",
+        "scopes": ["[parameters('appInsightsResourceId')]"],
+        "targetResourceTypes": ["microsoft.insights/components"],
+        "severity": 2,
+        "windowSize": "PT15M",
+        "autoMitigate": true,
+        "criteria": {
+          "allOf": [
+            {
+              "query": "let events = customEvents | where timestamp > ago(15m);\nlet failures = events | where tostring(customDimensions['result']) == 'failure' | summarize failures=count();\nlet total = events | summarize total=count();\nlet failureRate = iif(total == 0, 0, todouble(failures)/todouble(total));\nprint failureRate",
+              "timeAggregation": "Average",
+              "dimensions": [],
+              "operator": "GreaterThan",
+              "threshold": 0.02
+            }
+          ]
+        },
+        "actions": []
+      }
+    }
+  ]
+}

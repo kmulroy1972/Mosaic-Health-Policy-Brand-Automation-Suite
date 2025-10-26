@@ -12,6 +12,7 @@
     }
   },
   "dependencies": {
+    "@azure/identity": "^4.3.0",
     "@mhp/shared-brand-core": "workspace:*"
   }
 }
