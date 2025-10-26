@@ -24,7 +24,7 @@ if (-not (Test-Path $manifestPath)) {
 Write-Host "[deploy] Uploading task panes to storage"
 $taskpaneDir = Join-Path $artifactRoot 'word'
 Get-ChildItem $taskpaneDir -Filter '*.zip' | ForEach-Object {
-  az storage blob upload `
+  az storage blob upload --auth-mode login `
     --account-name $StorageAccount `
     --container-name "taskpanes" `
     --file $_.FullName `
@@ -39,7 +39,7 @@ az functionapp deployment source config-zip `
   --src "$artifactRoot/backend-functions-$Environment.zip"
 
 Write-Host "[deploy] Uploading manifest artifact"
-az storage blob upload `
+az storage blob upload --auth-mode login `
   --account-name $StorageAccount `
   --container-name "manifests" `
   --file $manifestPath `
