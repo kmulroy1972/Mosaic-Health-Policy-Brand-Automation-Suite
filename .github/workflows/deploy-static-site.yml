@@ -1,0 +1,32 @@
+name: Deploy Static Site
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  deploy-taskpane:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Deploy to Cloudways via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.CLOUDWAYS_SFTP_HOST }}
+          SFTP_USER: ${{ secrets.CLOUDWAYS_SFTP_USER }}
+          SFTP_PASS: ${{ secrets.CLOUDWAYS_SFTP_PASS }}
+        run: |
+          echo "Uploading taskpane files to Cloudways..."
+          sshpass -p "$SFTP_PASS" rsync -avz --delete \
+            apps/dev-host/public/ \
+            $SFTP_USER@$SFTP_HOST:/home/master/applications/mosaichealthpolicy/public_html/

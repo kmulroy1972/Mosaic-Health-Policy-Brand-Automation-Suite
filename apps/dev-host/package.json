@@ -5,6 +5,10 @@
   "type": "commonjs",
   "main": "dist/server.js",
   "types": "dist/server.d.ts",
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc"
+  },
   "exports": {
     ".": {
       "types": "./dist/server.d.ts",
