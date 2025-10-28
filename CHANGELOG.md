@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Workflow successfully triggered by v0.2.1 tag
 - Build system compiling correctly (TypeScript → JavaScript)
-- Static files prepared for deployment to cdn.mosaichealthpolicy.com
+- Static files prepared for deployment to cdn.mosaicpolicy.com
 
 ### Notes
 
@@ -39,9 +39,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Migrated from localhost:3000 to cdn.mosaichealthpolicy.com
+- Migrated from localhost:3000 to cdn.mosaicpolicy.com
 - Updated all manifests to use cloud CDN URLs
-- Configured CSP to allow cdn.mosaichealthpolicy.com and api.mosaichealthpolicy.com
+- Configured CSP to allow cdn.mosaicpolicy.com and api.mosaicpolicy.com
 - Enhanced server with proper MIME type handling and CORS headers
 
 ### Infrastructure

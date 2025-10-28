@@ -30,7 +30,7 @@ pnpm build
 pnpm dev
 ```
 
-The dev server will start on `https://localhost:3000` (note: HTTPS, not HTTP).
+The dev server will start on `https://cdn.mosaicpolicy.com` (note: HTTPS, not HTTP).
 
 ### Step 4: Sideload in Word
 
@@ -93,7 +93,7 @@ The add-in should now load in Word with the taskpane pointing to your local dev 
 
 The dev manifest (`word.dev.xml`) points to:
 
-- **URL:** `https://localhost:3000`
+- **URL:** `https://cdn.mosaicpolicy.com`
 - **ID:** `18a0d0a9-5ed1-4dc5-875c-2a2a0b9021be`
 
 To use test or production environments, sideload the respective manifests:

@@ -9,11 +9,11 @@ const publicDir = path.resolve(__dirname, '../public');
 const indexHtmlPath = path.join(publicDir, 'index.html');
 
 const cspHeader = [
-  "default-src 'self' https://cdn.mosaichealthpolicy.com https://api.mosaichealthpolicy.com https://*.officeapps.live.com https://*.microsoftonline.com https://appsforoffice.microsoft.com",
-  "script-src 'self' 'unsafe-inline' https://cdn.mosaichealthpolicy.com https://*.officeapps.live.com https://appsforoffice.microsoft.com",
+  "default-src 'self' https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com https://*.officeapps.live.com https://*.microsoftonline.com https://appsforoffice.microsoft.com",
+  "script-src 'self' 'unsafe-inline' https://cdn.mosaicpolicy.com https://*.officeapps.live.com https://appsforoffice.microsoft.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: https://*.sharepoint.com",
-  "connect-src 'self' https://cdn.mosaichealthpolicy.com https://api.mosaichealthpolicy.com https://*.officeapps.live.com https://appsforoffice.microsoft.com https://login.microsoftonline.com https://graph.microsoft.com https://*.azurewebsites.net https://*.azurefd.net",
+  "img-src 'self' data: https://*.sharepoint.com https://cdn.mosaicpolicy.com",
+  "connect-src 'self' https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com https://*.officeapps.live.com https://appsforoffice.microsoft.com https://login.microsoftonline.com https://graph.microsoft.com https://*.azurewebsites.net https://*.azurefd.net",
   "font-src 'self' data:",
   "frame-ancestors 'self' https://*.officeapps.live.com"
 ].join('; ');

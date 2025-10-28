@@ -36,7 +36,7 @@ This directory contains classic XML manifests generated from the unified manifes
 ## Notes
 
 - These manifests were generated from the unified manifest files in the parent `manifest/` directory
-- The development manifest (`word.dev.xml`) points to `https://localhost:3000`
+- The development manifest (`word.dev.xml`) points to `https://cdn.mosaicpolicy.com`
 - SSO configuration (WebApplicationInfo) has been omitted for simplified sideloading
 - All manifests use version 1.0.0.0 to meet Office Add-in validation requirements
 

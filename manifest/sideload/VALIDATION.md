@@ -6,7 +6,7 @@
 
 The following sideloadable Word manifests are available in this directory:
 
-- `word.dev.xml` - Development environment (https://localhost:3000)
+- `word.dev.xml` - Development environment (https://cdn.mosaicpolicy.com)
 - `word.test.xml` - Test environment (https://test-cdn.mhp.com)
 - `word.prod.xml` - Production environment (https://cdn.mhp.com)
 

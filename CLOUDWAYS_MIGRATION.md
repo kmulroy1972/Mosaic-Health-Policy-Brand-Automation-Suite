@@ -2,7 +2,7 @@
 
 ## Overview
 
-Successfully migrated MHP Brand Automation Office Add-in hosting from local development (localhost:3000) to cloud hosting at cdn.mosaichealthpolicy.com on Cloudways.
+Successfully migrated MHP Brand Automation Office Add-in hosting from local development (localhost:3000) to cloud hosting at cdn.mosaicpolicy.com on Cloudways.
 
 **Date:** October 27, 2025  
 **Release:** v0.2.0  
@@ -45,11 +45,11 @@ All Word XML manifests updated to use production CDN:
 
 **Changes:**
 
-- Replaced: `https://localhost:3000` → `https://cdn.mosaichealthpolicy.com`
-- Replaced: `https://test-cdn.mhp.com` → `https://cdn.mosaichealthpolicy.com`
-- Replaced: `https://cdn.mhp.com` → `https://cdn.mosaichealthpolicy.com`
+- Replaced: `https://localhost:3000` → `https://cdn.mosaicpolicy.com`
+- Replaced: `https://test-cdn.mhp.com` → `https://cdn.mosaicpolicy.com`
+- Replaced: `https://cdn.mhp.com` → `https://cdn.mosaicpolicy.com`
 
-**All manifests now point to:** `https://cdn.mosaichealthpolicy.com`
+**All manifests now point to:** `https://cdn.mosaicpolicy.com`
 
 ### 3. Content Security Policy Updated
 
@@ -58,9 +58,9 @@ All Word XML manifests updated to use production CDN:
 **Added Production Domains to CSP:**
 
 ```javascript
-default-src: Added 'https://cdn.mosaichealthpolicy.com' and 'https://api.mosaichealthpolicy.com'
-script-src: Added 'https://cdn.mosaichealthpolicy.com'
-connect-src: Added 'https://cdn.mosaichealthpolicy.com' and 'https://api.mosaichealthpolicy.com'
+default-src: Added 'https://cdn.mosaicpolicy.com' and 'https://api.mosaicpolicy.com'
+script-src: Added 'https://cdn.mosaicpolicy.com'
+connect-src: Added 'https://cdn.mosaicpolicy.com' and 'https://api.mosaicpolicy.com'
 ```
 
 **Purpose:** Allows the add-in to communicate with production CDN and API endpoints.
@@ -127,8 +127,8 @@ The following secrets must be configured in GitHub repository settings:
 
 Check that files are accessible at:
 
-- https://cdn.mosaichealthpolicy.com/index.html
-- https://cdn.mosaichealthpolicy.com/test.html
+- https://cdn.mosaicpolicy.com/index.html
+- https://cdn.mosaicpolicy.com/test.html
 
 ### 2. Test in Word Desktop
 
@@ -138,7 +138,7 @@ Check that files are accessible at:
 4. Upload: `manifest/sideload/word.dev.xml` (or word.test.xml, word.prod.xml)
 5. Click **Show Taskpane** button in Home ribbon
 
-**Expected Result:** Taskpane loads from `cdn.mosaichealthpolicy.com` without certificate errors.
+**Expected Result:** Taskpane loads from `cdn.mosaicpolicy.com` without certificate errors.
 
 ### 3. Test in Word Online
 
@@ -198,7 +198,7 @@ public/
 
 **Solutions:**
 
-- Verify files are at https://cdn.mosaichealthpolicy.com/index.html
+- Verify files are at https://cdn.mosaicpolicy.com/index.html
 - Check browser console for errors
 - Validate manifest with: `npx office-addin-manifest validate manifest/sideload/word.dev.xml`
 - Clear Word cache: `./clear-word-cache.sh`
@@ -220,7 +220,7 @@ public/
 
 1. ✅ **Set GitHub Secrets** - Configure SFTP credentials in GitHub
 2. ✅ **Create Icon Assets** - Add icon files to `apps/dev-host/public/assets/`
-3. ✅ **Test Deployment** - Verify files load from cdn.mosaichealthpolicy.com
+3. ✅ **Test Deployment** - Verify files load from cdn.mosaicpolicy.com
 4. ✅ **Test Add-in** - Upload manifest in Word and verify connection
 
 ### Short-term Improvements
@@ -257,7 +257,7 @@ Word Desktop → https://localhost:3000 → Dev Server (Mac)
 ### After (Cloud Hosting)
 
 ```
-Word Desktop/Online → https://cdn.mosaichealthpolicy.com → Cloudways CDN
+Word Desktop/Online → https://cdn.mosaicpolicy.com → Cloudways CDN
                                     ↓
                             Valid SSL Certificate
                                     ↓
@@ -353,8 +353,8 @@ pnpm build
 
 ### Health Checks
 
-- Add-in endpoint: https://cdn.mosaichealthpolicy.com/index.html
-- Test page: https://cdn.mosaichealthpolicy.com/test.html
+- Add-in endpoint: https://cdn.mosaicpolicy.com/index.html
+- Test page: https://cdn.mosaicpolicy.com/test.html
 - GitHub Actions: Check latest workflow run status
 
 ### Alerts to Set Up
@@ -377,7 +377,7 @@ pnpm build
 
 ## Git History
 
-**Commit:** dcfb749 "Add Cloudways deployment workflow and update manifests for cdn.mosaichealthpolicy.com"  
+**Commit:** dcfb749 "Add Cloudways deployment workflow and update manifests for cdn.mosaicpolicy.com"  
 **Tag:** v0.2.0  
 **Date:** October 27, 2025  
 **Files Changed:** 21 files, 2558 insertions, 47 deletions
