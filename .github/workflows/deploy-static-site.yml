@@ -27,6 +27,9 @@ jobs:
           SFTP_PASS: ${{ secrets.CLOUDWAYS_SFTP_PASS }}
         run: |
           echo "Uploading taskpane files to Cloudways..."
+          mkdir -p ~/.ssh
+          ssh-keyscan -H $SFTP_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
           sshpass -p "$SFTP_PASS" rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=accept-new" \
             apps/dev-host/public/ \
             $SFTP_USER@$SFTP_HOST:/home/master/applications/mosaichealthpolicy/public_html/
