@@ -50,7 +50,7 @@
 ### Functions App Endpoint
 
 ```bash
-$ curl -I https://mhpbrandfunctions38e5971a.azurewebsites.net/api/health
+$ curl -I https://api.mosaicpolicy.com/api/health
 
 HTTP/2 404
 Date: Mon, 27 Oct 2025 00:19:18 GMT
@@ -71,7 +71,7 @@ Server: Kestrel
 ### Functions App Base Status
 
 ```bash
-$ curl -I https://mhpbrandfunctions38e5971a.azurewebsites.net
+$ curl -I https://api.mosaicpolicy.com
 
 HTTP/2 200 OK
 Content-Type: text/html

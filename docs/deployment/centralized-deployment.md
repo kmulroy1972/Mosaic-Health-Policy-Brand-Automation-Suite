@@ -73,7 +73,7 @@ az functionapp show --name mhpbrandfunctions38e5971a \
   --query "{name:name,state:state,httpsOnly:httpsOnly}"
 
 # Test health endpoint
-curl -I https://mhpbrandfunctions38e5971a.azurewebsites.net/api/health
+curl -I https://api.mosaicpolicy.com/api/health
 ```
 
 **Expected Results:**
@@ -183,7 +183,7 @@ az functionapp deployment source config-zip \
   --src ./backend-functions-prod.zip
 
 # Verify deployment
-curl -I https://mhpbrandfunctions38e5971a.azurewebsites.net/api/health
+curl -I https://api.mosaicpolicy.com/api/health
 ```
 
 **Note:** Requires previous GitHub Actions run artifacts. Artifacts are retained for 90 days by default.

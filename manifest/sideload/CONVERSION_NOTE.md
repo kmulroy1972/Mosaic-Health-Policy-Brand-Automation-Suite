@@ -13,9 +13,9 @@ As of `office-addin-manifest@1.10.0`, **there is no official tool to convert uni
 
 The XML manifests in this directory were **manually created** based on the unified manifest specifications in `manifest/unified.*.json`:
 
-- `word.dev.xml` - Development environment (localhost:3000)
-- `word.test.xml` - Test environment (test-cdn.mhp.com)
-- `word.prod.xml` - Production environment (cdn.mhp.com)
+- `word.dev.xml` - Development environment (cdn.mosaicpolicy.com)
+- `word.test.xml` - Test environment (cdn.mosaicpolicy.com)
+- `word.prod.xml` - Production environment (cdn.mosaicpolicy.com)
 
 ## Validation
 
