@@ -1,30 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MHP Brand Automation - Commands</title>
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        // Office commands handler
-        // This file is referenced in the manifest's FunctionFile element
-        // and handles add-in command buttons (if any are added)
-        
-        Office.onReady(function() {
-            console.log('Commands.html loaded and Office.js initialized');
-        });
-        
-        // Placeholder for future command functions
-        // Example:
-        // function insertBrandTemplate() {
-        //     Word.run(function(context) {
-        //         // Insert template logic here
-        //         return context.sync();
-        //     });
-        // }
-    </script>
-</body>
-</html>
+      // Office commands handler
+      // This file is referenced in the manifest's FunctionFile element
+      // and handles add-in command buttons from the ribbon
 
+      Office.onReady(function () {
+        console.log('Commands.html loaded and Office.js initialized');
+      });
+
+      /**
+       * Handle Brand Check Command
+       * Performs a quick brand compliance check on selected text
+       */
+      function handleBrandCheck(event) {
+        Word.run(function (context) {
+          var selection = context.document.getSelection();
+          selection.load('text');
+
+          return context.sync().then(function () {
+            var text = selection.text;
+            console.log('Brand check on text:', text);
+
+            // Mock brand check logic
+            var issues = [];
+            if (text.toLowerCase().includes('cheap')) {
+              issues.push('Avoid word "cheap" - use "cost-effective" instead');
+            }
+            if (text.toLowerCase().includes('problem')) {
+              issues.push('Consider "challenge" or "opportunity" instead of "problem"');
+            }
+
+            if (issues.length > 0) {
+              // Show issues
+              var message = 'Brand suggestions:\n' + issues.join('\n');
+              Office.context.ui.displayDialogAsync(
+                'data:text/html,' + encodeURIComponent('<html><body><p>' + message + '</p></body></html>'),
+                { height: 30, width: 30 }
+              );
+            } else {
+              console.log('No brand issues found');
+            }
+
+            if (event) {
+              event.completed();
+            }
+          });
+        }).catch(function (error) {
+          console.error('Brand check error:', error);
+          if (event) {
+            event.completed();
+          }
+        });
+      }
+
+      /**
+       * Handle Template Insert Command
+       * Inserts a pre-approved document template
+       */
+      function handleTemplateInsert(event) {
+        Word.run(function (context) {
+          var body = context.document.body;
+
+          // Mock template insertion
+          var templateText =
+            'MHP BRAND TEMPLATE\n\n' +
+            'Date: ' +
+            new Date().toLocaleDateString() +
+            '\n\n' +
+            'TO: [Recipient]\n' +
+            'FROM: [Your Name]\n' +
+            'RE: [Subject]\n\n' +
+            '[Content goes here]\n\n' +
+            'This document follows MHP brand guidelines.';
+
+          var paragraph = body.insertParagraph(templateText, Word.InsertLocation.end);
+          paragraph.font.name = 'Segoe UI';
+          paragraph.font.size = 11;
+          paragraph.font.color = '#323130';
+
+          return context.sync().then(function () {
+            console.log('Template inserted successfully');
+            if (event) {
+              event.completed();
+            }
+          });
+        }).catch(function (error) {
+          console.error('Template insert error:', error);
+          if (event) {
+            event.completed();
+          }
+        });
+      }
+
+      /**
+       * Show Taskpane Command
+       * Opens the main taskpane (if called from ribbon command)
+       */
+      function showTaskpane(event) {
+        console.log('Show taskpane command called');
+        // Taskpane will be shown by Office based on manifest configuration
+        if (event) {
+          event.completed();
+        }
+      }
+
+      // Make functions globally available for ribbon commands
+      window.handleBrandCheck = handleBrandCheck;
+      window.handleTemplateInsert = handleTemplateInsert;
+      window.showTaskpane = showTaskpane;
+    </script>
+  </body>
+</html>

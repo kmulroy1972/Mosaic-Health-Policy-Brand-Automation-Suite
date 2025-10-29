@@ -3,39 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com; script-src 'self' 'unsafe-inline' https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.mosaicpolicy.com https://graph.microsoft.com https://login.microsoftonline.com; img-src 'self' data: https://cdn.mosaicpolicy.com;" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com; script-src 'self' 'unsafe-inline' https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.mosaicpolicy.com https://graph.microsoft.com https://login.microsoftonline.com; img-src 'self' data: https://cdn.mosaicpolicy.com;"
+    />
     <title>MHP Brand Automation</title>
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
     <style>
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
-        padding: 20px;
+        padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         background: #f5f5f5;
+        height: 100vh;
       }
-      .container {
-        max-width: 400px;
-        margin: 0 auto;
+      .taskpane {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         background: white;
-        padding: 24px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
-      h1 {
+      header {
+        background: #0078d4;
+        color: white;
+        padding: 16px 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .status-bar {
+        font-size: 12px;
+        opacity: 0.95;
+      }
+      .status-bar span {
+        display: inline-block;
+        margin-right: 12px;
+      }
+      .tabs {
+        display: flex;
+        background: #f3f2f1;
+        border-bottom: 1px solid #e1dfdd;
+      }
+      .tab {
+        flex: 1;
+        padding: 12px 8px;
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #605e5c;
+        transition: all 0.2s;
+      }
+      .tab:hover {
+        background: #edebe9;
+      }
+      .tab.active {
+        color: #0078d4;
+        border-bottom-color: #0078d4;
+        background: white;
+      }
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      section {
+        display: none;
+      }
+      section.active {
+        display: block;
+      }
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
         margin: 0 0 16px 0;
-        font-size: 24px;
-        color: #333;
+        color: #323130;
       }
-      p {
-        color: #666;
+      .info-card {
+        background: #f3f2f1;
+        padding: 16px;
+        border-radius: 4px;
+        margin-bottom: 16px;
+      }
+      .info-card h3 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #323130;
+      }
+      .info-card p {
+        margin: 0;
+        font-size: 13px;
+        color: #605e5c;
         line-height: 1.5;
       }
-      .status {
-        padding: 12px;
-        background: #e3f2fd;
-        border-left: 4px solid #2196f3;
+      .color-box {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
         border-radius: 4px;
-        margin-top: 16px;
+        margin-right: 12px;
+        vertical-align: middle;
+        border: 1px solid #e1dfdd;
+      }
+      .template-item {
+        padding: 12px;
+        background: white;
+        border: 1px solid #e1dfdd;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .template-item:hover {
+        border-color: #0078d4;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .template-item h4 {
+        margin: 0 0 4px 0;
+        font-size: 14px;
+        color: #323130;
+      }
+      .template-item p {
+        margin: 0;
+        font-size: 12px;
+        color: #605e5c;
       }
       button {
         background: #0078d4;
@@ -45,58 +145,365 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 14px;
-        margin-top: 16px;
+        font-weight: 500;
+        transition: background 0.2s;
+        width: 100%;
+        margin-top: 8px;
       }
       button:hover {
         background: #106ebe;
       }
+      button:active {
+        background: #005a9e;
+      }
+      .status-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+      .status-healthy {
+        background: #107c10;
+      }
+      .status-error {
+        background: #d13438;
+      }
+      .status-loading {
+        background: #faa21b;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>MHP Brand Automation</h1>
-      <p>Development environment taskpane loaded successfully.</p>
-      <div class="status">
-        ✅ Office.js loaded<br>
-        ✅ Connected to https://cdn.mosaicpolicy.com
+    <div class="taskpane">
+      <header>
+        <h1>MHP Brand Automation</h1>
+        <div class="status-bar">
+          <span id="cdnStatus">📡 CDN: cdn.mosaicpolicy.com</span>
+          <span id="backendStatus">🔄 Backend: Checking...</span>
+        </div>
+      </header>
+
+      <nav class="tabs">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="brand">Brand</button>
+        <button class="tab" data-tab="templates">Templates</button>
+      </nav>
+
+      <div class="content">
+        <!-- Overview Section -->
+        <section id="overview" class="active">
+          <h2 class="section-title">MHP Brand Automation</h2>
+
+          <div class="info-card">
+            <h3>Backend Status</h3>
+            <p id="apiStatusDetails">
+              <span class="status-indicator status-loading"></span>
+              Connecting to API...
+            </p>
+            <p id="apiVersion" style="margin-top: 8px; font-size: 12px;"></p>
+            <p id="apiTimestamp" style="margin-top: 4px; font-size: 11px; color: #8a8886;"></p>
+          </div>
+
+          <div class="info-card">
+            <h3>Quick Test</h3>
+            <p>Test the Word API integration by inserting sample text.</p>
+            <button id="testBtn">Insert Test Text</button>
+          </div>
+        </section>
+
+        <!-- Brand Guidelines Section -->
+        <section id="brand">
+          <h2 class="section-title">Brand Guidelines</h2>
+
+          <div class="info-card">
+            <h3>Brand Colors</h3>
+            <p>
+              <span class="color-box" style="background: #0078d4;"></span>
+              <strong>Primary:</strong> #0078d4 (Microsoft Blue)
+            </p>
+            <p style="margin-top: 12px;">
+              <span class="color-box" style="background: #107c10;"></span>
+              <strong>Success:</strong> #107c10 (Green)
+            </p>
+            <p style="margin-top: 12px;">
+              <span class="color-box" style="background: #d13438;"></span>
+              <strong>Error:</strong> #d13438 (Red)
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Typography</h3>
+            <p><strong>Headings:</strong> Segoe UI, 16-24px, Semi-bold</p>
+            <p><strong>Body:</strong> Segoe UI, 13-14px, Regular</p>
+            <p><strong>Small:</strong> Segoe UI, 11-12px, Regular</p>
+          </div>
+
+          <div class="info-card">
+            <h3>Logo Usage</h3>
+            <p>
+              MHP logo must maintain clear space equal to the height of the 'M' in the
+              logo on all sides.
+            </p>
+            <p style="margin-top: 8px;">
+              <strong>Minimum size:</strong> 40px height for digital, 0.5" for print
+            </p>
+          </div>
+
+          <button id="applyBrandBtn">Apply Brand Formatting</button>
+        </section>
+
+        <!-- Templates Section -->
+        <section id="templates">
+          <h2 class="section-title">Document Templates</h2>
+
+          <div class="template-item">
+            <h4>📄 MHP Memo Template</h4>
+            <p>Standard internal memo format with MHP branding</p>
+            <button class="template-btn" data-template="memo">Insert Template</button>
+          </div>
+
+          <div class="template-item">
+            <h4>📊 Policy Brief Template</h4>
+            <p>Professional policy brief with standard sections</p>
+            <button class="template-btn" data-template="brief">Insert Template</button>
+          </div>
+
+          <div class="template-item">
+            <h4>📝 Client Report Template</h4>
+            <p>Client-facing report with executive summary</p>
+            <button class="template-btn" data-template="report">Insert Template</button>
+          </div>
+
+          <div class="template-item">
+            <h4>✉️ Letter Template</h4>
+            <p>Formal letter with MHP letterhead</p>
+            <button class="template-btn" data-template="letter">Insert Template</button>
+          </div>
+        </section>
       </div>
-      <button id="testBtn">Test Button</button>
     </div>
+
     <script>
       // Global error handler
-      window.onerror = function(msg, url, lineNo, columnNo, error) {
+      window.onerror = function (msg, url, lineNo, columnNo, error) {
         console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo);
         return false;
       };
 
+      // Tab navigation
+      var tabs = document.querySelectorAll('.tab');
+      var sections = document.querySelectorAll('section');
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var targetTab = this.getAttribute('data-tab');
+
+          tabs.forEach(function (t) {
+            t.classList.remove('active');
+          });
+          sections.forEach(function (s) {
+            s.classList.remove('active');
+          });
+
+          this.classList.add('active');
+          document.getElementById(targetTab).classList.add('active');
+        });
+      });
+
+      // Check backend API health
+      function checkBackendHealth() {
+        var statusEl = document.getElementById('backendStatus');
+        var detailsEl = document.getElementById('apiStatusDetails');
+        var versionEl = document.getElementById('apiVersion');
+        var timestampEl = document.getElementById('apiTimestamp');
+
+        statusEl.innerHTML = '🔄 Backend: Checking...';
+
+        fetch('https://api.mosaicpolicy.com/api/health')
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error('HTTP ' + response.status);
+            }
+            return response.json();
+          })
+          .then(function (data) {
+            var indicator = data.status === 'healthy' ? 'status-healthy' : 'status-error';
+            var emoji = data.status === 'healthy' ? '✅' : '⚠️';
+
+            statusEl.innerHTML = emoji + ' Backend: ' + data.status.toUpperCase();
+            detailsEl.innerHTML =
+              '<span class="status-indicator ' +
+              indicator +
+              '"></span>' +
+              'API Status: ' +
+              data.status.toUpperCase();
+
+            if (data.version) {
+              versionEl.innerHTML = 'Version: ' + data.version;
+            }
+            if (data.timestamp) {
+              var time = new Date(data.timestamp).toLocaleTimeString();
+              timestampEl.innerHTML = 'Last check: ' + time;
+            }
+
+            console.log('Backend health:', data);
+          })
+          .catch(function (error) {
+            console.error('Backend health check failed:', error);
+            statusEl.innerHTML = '⚠️ Backend: Unreachable';
+            detailsEl.innerHTML =
+              '<span class="status-indicator status-error"></span>' +
+              'API Unreachable - Running in offline mode';
+            timestampEl.innerHTML = 'Error: ' + error.message;
+          });
+      }
+
       // Initialize Office
-      (function() {
+      (function () {
         if (typeof Office === 'undefined') {
-          document.body.innerHTML = '<div style="padding:20px;color:red;">Office.js failed to load. Check console.</div>';
+          document.body.innerHTML =
+            '<div style="padding:20px;color:red;">Office.js failed to load. Check console.</div>';
           return;
         }
 
-        Office.onReady(function(info) {
+        Office.onReady(function (info) {
           console.log('Office.js ready:', info);
-          
-          var btn = document.getElementById('testBtn');
-          if (btn) {
-            btn.addEventListener('click', function() {
-              Word.run(function(context) {
+
+          // Check backend health on load
+          checkBackendHealth();
+
+          // Test button
+          var testBtn = document.getElementById('testBtn');
+          if (testBtn) {
+            testBtn.addEventListener('click', function () {
+              Word.run(function (context) {
                 var paragraph = context.document.body.insertParagraph(
                   'Hello from MHP Brand Automation!',
                   Word.InsertLocation.end
                 );
                 paragraph.font.color = 'blue';
                 return context.sync();
-              }).catch(function(error) {
+              }).catch(function (error) {
                 console.error('Word API Error:', error);
                 alert('Error: ' + error.message);
               });
             });
           }
+
+          // Brand formatting button
+          var brandBtn = document.getElementById('applyBrandBtn');
+          if (brandBtn) {
+            brandBtn.addEventListener('click', function () {
+              Word.run(function (context) {
+                var selection = context.document.getSelection();
+                selection.font.name = 'Segoe UI';
+                selection.font.size = 14;
+                selection.font.color = '#323130';
+                return context.sync();
+              })
+                .then(function () {
+                  console.log('Brand formatting applied');
+                })
+                .catch(function (error) {
+                  console.error('Brand formatting error:', error);
+                  alert('Error: ' + error.message);
+                });
+            });
+          }
+
+          // Template buttons
+          var templateBtns = document.querySelectorAll('.template-btn');
+          templateBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var template = this.getAttribute('data-template');
+              insertTemplate(template);
+            });
+          });
         });
       })();
+
+      // Insert template function
+      function insertTemplate(templateType) {
+        Word.run(function (context) {
+          var body = context.document.body;
+          var templateText = '';
+
+          switch (templateType) {
+            case 'memo':
+              templateText =
+                'MEMORANDUM\n\n' +
+                'TO: [Recipient]\n' +
+                'FROM: [Your Name]\n' +
+                'DATE: ' +
+                new Date().toLocaleDateString() +
+                '\n' +
+                'RE: [Subject]\n\n' +
+                '[Memo content goes here]\n';
+              break;
+            case 'brief':
+              templateText =
+                'POLICY BRIEF\n\n' +
+                'Title: [Brief Title]\n' +
+                'Date: ' +
+                new Date().toLocaleDateString() +
+                '\n\n' +
+                'EXECUTIVE SUMMARY\n' +
+                '[Summary goes here]\n\n' +
+                'BACKGROUND\n' +
+                '[Background information]\n\n' +
+                'RECOMMENDATIONS\n' +
+                '[Recommendations]\n';
+              break;
+            case 'report':
+              templateText =
+                'CLIENT REPORT\n\n' +
+                'Prepared for: [Client Name]\n' +
+                'Date: ' +
+                new Date().toLocaleDateString() +
+                '\n\n' +
+                'EXECUTIVE SUMMARY\n' +
+                '[Executive summary]\n\n' +
+                'ANALYSIS\n' +
+                '[Detailed analysis]\n\n' +
+                'NEXT STEPS\n' +
+                '[Recommended actions]\n';
+              break;
+            case 'letter':
+              templateText =
+                'MHP Health Policy\n' +
+                '[Address Line 1]\n' +
+                '[City, State ZIP]\n\n' +
+                new Date().toLocaleDateString() +
+                '\n\n' +
+                '[Recipient Name]\n' +
+                '[Recipient Title]\n' +
+                '[Organization]\n' +
+                '[Address]\n\n' +
+                'Dear [Recipient],\n\n' +
+                '[Letter content]\n\n' +
+                'Sincerely,\n\n' +
+                '[Your Name]\n' +
+                '[Your Title]\n';
+              break;
+            default:
+              templateText = 'Template not found.';
+          }
+
+          var paragraph = body.insertParagraph(templateText, Word.InsertLocation.end);
+          paragraph.font.name = 'Segoe UI';
+          paragraph.font.size = 11;
+
+          return context.sync();
+        })
+          .then(function () {
+            console.log('Template inserted:', templateType);
+          })
+          .catch(function (error) {
+            console.error('Template insertion error:', error);
+            alert('Error inserting template: ' + error.message);
+          });
+      }
     </script>
   </body>
 </html>
