@@ -5,6 +5,39 @@ All notable changes to the Mosaic Health Policy Brand Automation Suite will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - In Progress
+
+### Planned - Backend Integration & UI Expansion
+
+#### Added
+
+- Backend API health check integration with https://api.mosaicpolicy.com/api/health
+- Real Brand Guidelines section in taskpane
+- Real Templates section in taskpane
+- commands.html for add-in command functions
+- Icon assets (16px, 32px, 64px, 80px) in /assets directory
+
+#### Enhanced
+
+- Taskpane UI with multi-section layout
+- API connectivity and error handling
+- User feedback and loading states
+- Brand automation workflows
+
+#### Infrastructure
+
+- API endpoint integration tests
+- Enhanced error logging and telemetry
+- Improved user experience
+
+### Notes
+
+- Development branch: feature/v0.3.0-backend-ui
+- Target: Full backend integration with Azure Functions
+- Focus: Production-ready UI and functionality
+
+---
+
 ## [0.2.1] - 2025-10-28
 
 ### Verified
