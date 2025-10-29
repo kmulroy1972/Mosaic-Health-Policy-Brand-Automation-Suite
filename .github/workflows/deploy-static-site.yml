@@ -32,4 +32,4 @@ jobs:
           sshpass -p "$SFTP_PASS" rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no" \
             apps/dev-host/public/ \
-            $SFTP_USER@$SFTP_HOST:/home/master/applications/mosaichealthpolicy/public_html/
+            $SFTP_USER@$SFTP_HOST:public_html/
