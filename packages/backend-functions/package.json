@@ -3,8 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "commonjs",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "package": "node ../../scripts/package-azure-functions.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,6 +16,7 @@
     }
   },
   "dependencies": {
+    "@azure/functions": "^4.8.0",
     "@azure/identity": "^4.3.0",
     "@mhp/shared-brand-core": "workspace:*"
   }
