@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mosaic Brand API Console</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f9fafb; margin: 2rem; }
+    h1 { color: #0a5dc2; }
+    button { margin: 0.5rem 0; padding: 0.6rem 1rem; border: none; background: #0a5dc2; color: white; border-radius: 6px; cursor: pointer; }
+    pre { background: #fff; border: 1px solid #ddd; padding: 1rem; border-radius: 6px; max-width: 600px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>🧩 Mosaic Health Policy API Console</h1>
+
+  <button onclick="call('health')">Check Health</button>
+  <button onclick="call('templates')">Templates</button>
+  <button onclick="call('rewrite')">Rewrite</button>
+  <button onclick="call('pdf/convert')">Convert PDF</button>
+  <button onclick="call('pdf/validate')">Validate PDF</button>
+
+  <h3>Response:</h3>
+  <pre id="output">Click a button to test.</pre>
+
+  <script>
+    async function call(route) {
+      document.getElementById('output').textContent = 'Loading...';
+      try {
+        const res = await fetch(`https://api.mosaicpolicy.com/api/${route}`);
+        const txt = await res.text();
+        document.getElementById('output').textContent = txt;
+      } catch (err) {
+        document.getElementById('output').textContent = 'Error: ' + err;
+      }
+    }
+  </script>
+</body>
+</html>
