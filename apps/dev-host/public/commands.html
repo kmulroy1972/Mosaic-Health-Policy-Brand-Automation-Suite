@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mosaic Brand Commands</title>
+</head>
+<body>
+  <script>
+    // Office.js commands handler
+    Office.onReady((info) => {
+      if (info.host === Office.HostType.Word) {
+        // Commands are ready
+        console.log('Commands loaded for Word');
+      }
+    });
+
+    function handleBrandCheck(event) {
+      // Handle brand check command
+      console.log('Brand check requested');
+      event.completed();
+    }
+
+    function handleTemplateInsert(event) {
+      // Handle template insert command
+      console.log('Template insert requested');
+      event.completed();
+    }
+
+    function showTaskpane(event) {
+      // This is handled by the manifest, but include for completeness
+      event.completed();
+    }
+
+    // Export functions for Office.js to call
+    if (typeof module !== 'undefined' && module.exports) {
+      module.exports = {
+        handleBrandCheck,
+        handleTemplateInsert,
+        showTaskpane
+      };
+    }
+  </script>
+</body>
+</html>
+
