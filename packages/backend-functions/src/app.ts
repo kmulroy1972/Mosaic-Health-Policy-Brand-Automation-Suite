@@ -14,6 +14,7 @@ import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
 import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
 import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
+import { brandSearchHttpTrigger } from './search/httpTrigger';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
 import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { versionHttpTrigger } from './system/versionHttpTrigger';
@@ -216,5 +217,17 @@ app.http('complianceLabel', {
   handler: complianceLabelHttpTrigger
 });
 
+// Brand search endpoint
+app.http('brandSearch', {
+  methods: ['GET'],
+  route: 'api/brand/search',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: brandSearchHttpTrigger
+});
+
 // Import nightly compliance job to register timer
 import './compliance/nightlyComplianceJob';
+// Import secret rotation job to register timer
+import './secrets/rotationJob';
+// Import weekly self-audit job to register timer
+import './system/selfAuditJob';
