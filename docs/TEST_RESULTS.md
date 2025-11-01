@@ -9,17 +9,16 @@
 | Endpoint                      | Method | Expected | Actual | Status | Notes                    |
 | ----------------------------- | ------ | -------- | ------ | ------ | ------------------------ |
 | `/api/api/health`             | GET    | 200      | 200    | ✅     | Health check working     |
-| `/api/api/templates`          | GET    | 200      | TBD    | ⚠️     | Needs Graph API config   |
+| `/api/api/templates`          | GET    | 200      | 200    | ✅     | Returns template list    |
 | `/api/api/rewrite`            | POST   | 200      | TBD    | ⚠️     | Needs OpenAI config      |
-| `/api/api/brandguidanceagent` | POST   | 200      | 400    | ⚠️     | OpenAI not configured    |
+| `/api/api/brandguidanceagent` | POST   | 200      | 500    | ⚠️     | OpenAI not configured    |
 | `/api/api/pdf/validate`       | POST   | 200      | 200    | ✅     | Returns compliance score |
 | `/api/api/pdf/convert`        | POST   | 200      | 200    | ✅     | Returns text extraction  |
 
 ### Summary
 
-**Working Endpoints:** 3/6  
-**Requires Configuration:** 2/6 (OpenAI env vars)  
-**Needs Testing:** 1/6 (Templates - Graph API)
+**Working Endpoints:** 4/6  
+**Requires Configuration:** 2/6 (OpenAI env vars for rewrite and brandguidance)
 
 ### Deployment Status
 
