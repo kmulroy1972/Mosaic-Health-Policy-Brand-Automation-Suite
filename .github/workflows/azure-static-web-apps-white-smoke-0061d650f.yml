@@ -39,6 +39,9 @@ jobs:
         run: |
           cd apps/dashboard
           npm run build
+          # Ensure config file is in dist for deployment
+          cp staticwebapp.config.json dist/ || echo "Config already copied"
+          ls -la dist/staticwebapp.config.json || echo "WARNING: Config file not found in dist"
       - name: Deploy Dashboard
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
