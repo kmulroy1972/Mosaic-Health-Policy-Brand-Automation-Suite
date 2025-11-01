@@ -1,8 +1,14 @@
 import { app } from '@azure/functions';
 
 import { rewriteHttpTrigger } from './ai/httpTrigger';
+import { promptTuneHttpTrigger } from './ai/promptTuneHttpTrigger';
+import { benchmarkHttpTrigger } from './analytics/benchmarkHttpTrigger';
+import { clientSuccessHttpTrigger } from './analytics/clientSuccessHttpTrigger';
 import { analyticsReportHttpTrigger } from './analytics/httpTrigger';
+import { analyticsPredictHttpTrigger } from './analytics/predictiveHttpTrigger';
+import { audioHttpTrigger } from './audio/audioHttpTrigger';
 import { audioSummaryHttpTrigger } from './audio/httpTrigger';
+import { auditEvidenceHttpTrigger } from './audit/evidenceHttpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
 import { brandQAHttpTrigger } from './brand/qaHttpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
@@ -11,8 +17,11 @@ import { collabSessionHttpTrigger } from './collaboration/httpTrigger';
 import { complianceDashboardHttpTrigger } from './compliance/dashboardHttpTrigger';
 import { complianceLabelHttpTrigger } from './compliance/dlpHttpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
+import { complianceRealtimeHttpTrigger } from './compliance/realtimeHttpTrigger';
+import { configHttpTrigger } from './config/httpTrigger';
 import { costSummaryHttpTrigger } from './cost/httpTrigger';
 import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigger';
+import { ethicsDashboardHttpTrigger } from './ethics/ethicsHttpTrigger';
 import { ethicsCheckHttpTrigger } from './ethics/httpTrigger';
 import { experimentsReportHttpTrigger } from './experiments/httpTrigger';
 import { fundingPredictHttpTrigger } from './funding/httpTrigger';
@@ -21,16 +30,21 @@ import { graphQueryHttpTrigger } from './graph/httpTrigger';
 import { redteamRunHttpTrigger } from './guardrails/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
+import { knowledgeQueryHttpTrigger } from './knowledge/httpTrigger';
 import { faqSearchHttpTrigger } from './knowledgebase/httpTrigger';
 import { legislationTrackHttpTrigger } from './legislation/httpTrigger';
 import { mediaAssembleHttpTrigger } from './media/httpTrigger';
+import { memoryConversationHttpTrigger } from './memory/httpTrigger';
 import { narrativesComposeHttpTrigger } from './narratives/httpTrigger';
 import { notifySendHttpTrigger } from './notifications/httpTrigger';
+import { orchestrationHttpTrigger } from './orchestration/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
 import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
 import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
+import { regulationDraftHttpTrigger } from './regulation/httpTrigger';
 import { reportsGenerateHttpTrigger } from './reports/httpTrigger';
+import { riskScanHttpTrigger } from './risk/httpTrigger';
 import { scheduleReportHttpTrigger } from './scheduler/httpTrigger';
 import { brandSearchHttpTrigger } from './search/httpTrigger';
 import { semanticSearchHttpTrigger } from './search/semanticHttpTrigger';
@@ -38,10 +52,12 @@ import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/
 import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { versionHttpTrigger } from './system/versionHttpTrigger';
 import { taggingExtractHttpTrigger } from './tagging/httpTrigger';
+import { taggingSemanticHttpTrigger } from './tagging/semanticHttpTrigger';
 import { templatesHttpTrigger } from './templates/httpTrigger';
 import { tenantsConfigHttpTrigger, tenantsListHttpTrigger } from './tenants/httpTrigger';
 import { translateHttpTrigger } from './translation/httpTrigger';
 import { usersAddHttpTrigger, usersListHttpTrigger } from './users/httpTrigger';
+import { videoAnnotateHttpTrigger } from './video/httpTrigger';
 import { visualsChartHttpTrigger } from './visuals/httpTrigger';
 
 // Health check endpoint
@@ -421,6 +437,134 @@ app.http('faqSearch', {
   route: 'api/faq/search',
   authLevel: 'anonymous', // Auth checked in handler
   handler: faqSearchHttpTrigger
+});
+
+// Real-time compliance endpoint (Presidio + MIP)
+app.http('complianceRealtime', {
+  methods: ['POST'],
+  route: 'api/compliance/realtime',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: complianceRealtimeHttpTrigger
+});
+
+// Configuration service endpoint
+app.http('config', {
+  methods: ['GET', 'PUT'],
+  route: 'api/config',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: configHttpTrigger
+});
+
+// Knowledge graph query endpoint
+app.http('knowledgeQuery', {
+  methods: ['POST'],
+  route: 'api/knowledge/query',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: knowledgeQueryHttpTrigger
+});
+
+// Audit evidence pack endpoint
+app.http('auditEvidence', {
+  methods: ['POST'],
+  route: 'api/audit/evidence',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: auditEvidenceHttpTrigger
+});
+
+// Prompt tuning endpoint
+app.http('promptTune', {
+  methods: ['POST'],
+  route: 'api/prompts/tune',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: promptTuneHttpTrigger
+});
+
+// Conversational memory endpoint
+app.http('memoryConversation', {
+  methods: ['POST'],
+  route: 'api/memory/conversation',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: memoryConversationHttpTrigger
+});
+
+// Predictive maintenance analytics endpoint
+app.http('analyticsPredict', {
+  methods: ['GET'],
+  route: 'api/analytics/predict',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: analyticsPredictHttpTrigger
+});
+
+// Risk scanner endpoint
+app.http('riskScan', {
+  methods: ['POST'],
+  route: 'api/risk/scan',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: riskScanHttpTrigger
+});
+
+// Audio generation/transcription endpoints
+app.http('audioGenerate', {
+  methods: ['POST'],
+  route: 'api/audio/{action}',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: audioHttpTrigger
+});
+
+// Video annotation endpoint
+app.http('videoAnnotate', {
+  methods: ['POST'],
+  route: 'api/video/annotate',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: videoAnnotateHttpTrigger
+});
+
+// Orchestration endpoint
+app.http('orchestration', {
+  methods: ['GET', 'POST'],
+  route: 'api/orchestration/workflow',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: orchestrationHttpTrigger
+});
+
+// Semantic tagging endpoint
+app.http('taggingSemantic', {
+  methods: ['POST'],
+  route: 'api/tagging/semantic',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: taggingSemanticHttpTrigger
+});
+
+// Client success analytics endpoint
+app.http('clientSuccess', {
+  methods: ['GET'],
+  route: 'api/analytics/clientsuccess',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: clientSuccessHttpTrigger
+});
+
+// Regulatory writing endpoint
+app.http('regulationDraft', {
+  methods: ['POST'],
+  route: 'api/regulation/draft',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: regulationDraftHttpTrigger
+});
+
+// Ethics board dashboard endpoint
+app.http('ethicsDashboard', {
+  methods: ['GET'],
+  route: 'api/ethics/dashboard',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: ethicsDashboardHttpTrigger
+});
+
+// Benchmarking endpoint
+app.http('benchmark', {
+  methods: ['POST'],
+  route: 'api/analytics/benchmark',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: benchmarkHttpTrigger
 });
 
 // Import nightly compliance job to register timer

@@ -4,14 +4,15 @@ import { authenticateRequest } from '../auth/middleware';
 import { extractTraceContext, injectTraceContext } from '../telemetry/tracing';
 import { createLogger } from '../utils/logger';
 
-import { applyMIPLabel, type MIPLabel } from './mip';
+import { applyMIPLabel, type MIPLabelRequest } from './mipLabeling';
 import { scanForPII } from './presidio';
 
+
 /**
- * HTTP trigger for DLP and MIP labeling.
- * POST /api/compliance/label
+ * HTTP trigger for real-time compliance (Presidio + MIP).
+ * POST /api/compliance/realtime
  */
-export async function complianceLabelHttpTrigger(
+export async function complianceRealtimeHttpTrigger(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -42,39 +43,55 @@ export async function complianceLabelHttpTrigger(
 
   try {
     const body = (await request.json()) as {
-      documentPath?: string;
-      content?: string;
-      label?: MIPLabel;
-      autoMask?: boolean;
+      text: string;
+      scanPII?: boolean;
+      applyMIP?: boolean;
+      mipSensitivity?: MIPLabelRequest['sensitivity'];
     };
 
-    // Detect PII if content provided
-    let piiResult = null;
-    if (body.content) {
-      piiResult = await scanForPII({ text: body.content });
-      logger.info('PII detection completed', {
-        entitiesFound: piiResult.entities.length,
-        correlationId: traceContext.correlationId
-      });
+    if (!body.text) {
+      return {
+        status: 400,
+        jsonBody: { error: 'Missing required field: text' },
+        headers: injectTraceContext(traceContext)
+      };
     }
 
-    // Apply MIP label if provided
-    let labelResult = null;
-    if (body.documentPath && body.label) {
-      labelResult = await applyMIPLabel(body.documentPath, body.label);
-      logger.info('MIP label applied', {
-        labelId: labelResult.labelId,
-        correlationId: traceContext.correlationId
+    logger.info('Real-time compliance scan requested', {
+      scanPII: body.scanPII,
+      applyMIP: body.applyMIP,
+      correlationId: traceContext.correlationId
+    });
+
+    const result: {
+      piiScan?: ReturnType<typeof scanForPII> extends Promise<infer T> ? T : never;
+      mipLabel?: ReturnType<typeof applyMIPLabel> extends Promise<infer T> ? T : never;
+    } = {};
+
+    // Presidio PII scan
+    if (body.scanPII) {
+      const piiResult = await scanForPII({
+        text: body.text,
+        language: 'en'
       });
+      result.piiScan = piiResult;
+    }
+
+    // MIP labeling
+    if (body.applyMIP) {
+      const mipResult = await applyMIPLabel(
+        {
+          content: body.text,
+          sensitivity: body.mipSensitivity
+        },
+        context
+      );
+      result.mipLabel = mipResult;
     }
 
     return {
       status: 200,
-      jsonBody: {
-        piiDetection: piiResult,
-        masking: body.autoMask && piiResult ? { maskedText: piiResult.anonymizedText } : null,
-        mipLabeling: labelResult
-      },
+      jsonBody: result,
       headers: {
         'Content-Type': 'application/json',
         ...injectTraceContext(traceContext)
@@ -83,14 +100,14 @@ export async function complianceLabelHttpTrigger(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error ?? 'unknown');
     logger.error(
-      'DLP/MIP operation failed',
+      'Real-time compliance scan failed',
       error instanceof Error ? error : new Error(errorMessage)
     );
 
     return {
       status: 500,
       jsonBody: {
-        error: 'DLP/MIP operation failed.',
+        error: 'Real-time compliance scan failed.',
         details: errorMessage
       },
       headers: injectTraceContext(traceContext)

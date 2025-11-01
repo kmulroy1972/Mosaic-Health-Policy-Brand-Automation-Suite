@@ -4,14 +4,14 @@ import { authenticateRequest } from '../auth/middleware';
 import { extractTraceContext, injectTraceContext } from '../telemetry/tracing';
 import { createLogger } from '../utils/logger';
 
-import { applyMIPLabel, type MIPLabel } from './mip';
-import { scanForPII } from './presidio';
+import { draftRegulatorySubmission, type RegulatoryDraftRequest } from './draft';
+
 
 /**
- * HTTP trigger for DLP and MIP labeling.
- * POST /api/compliance/label
+ * HTTP trigger for regulatory writing.
+ * POST /api/regulation/draft
  */
-export async function complianceLabelHttpTrigger(
+export async function regulationDraftHttpTrigger(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -41,40 +41,27 @@ export async function complianceLabelHttpTrigger(
   }
 
   try {
-    const body = (await request.json()) as {
-      documentPath?: string;
-      content?: string;
-      label?: MIPLabel;
-      autoMask?: boolean;
-    };
+    const body = (await request.json()) as RegulatoryDraftRequest;
 
-    // Detect PII if content provided
-    let piiResult = null;
-    if (body.content) {
-      piiResult = await scanForPII({ text: body.content });
-      logger.info('PII detection completed', {
-        entitiesFound: piiResult.entities.length,
-        correlationId: traceContext.correlationId
-      });
+    if (!body.regulationType || !body.topic || !body.requirements) {
+      return {
+        status: 400,
+        jsonBody: { error: 'Missing required fields: regulationType, topic, requirements' },
+        headers: injectTraceContext(traceContext)
+      };
     }
 
-    // Apply MIP label if provided
-    let labelResult = null;
-    if (body.documentPath && body.label) {
-      labelResult = await applyMIPLabel(body.documentPath, body.label);
-      logger.info('MIP label applied', {
-        labelId: labelResult.labelId,
-        correlationId: traceContext.correlationId
-      });
-    }
+    logger.info('Regulatory draft requested', {
+      regulationType: body.regulationType,
+      topic: body.topic,
+      correlationId: traceContext.correlationId
+    });
+
+    const result = await draftRegulatorySubmission(body, context);
 
     return {
       status: 200,
-      jsonBody: {
-        piiDetection: piiResult,
-        masking: body.autoMask && piiResult ? { maskedText: piiResult.anonymizedText } : null,
-        mipLabeling: labelResult
-      },
+      jsonBody: result,
       headers: {
         'Content-Type': 'application/json',
         ...injectTraceContext(traceContext)
@@ -83,14 +70,14 @@ export async function complianceLabelHttpTrigger(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error ?? 'unknown');
     logger.error(
-      'DLP/MIP operation failed',
+      'Regulatory draft failed',
       error instanceof Error ? error : new Error(errorMessage)
     );
 
     return {
       status: 500,
       jsonBody: {
-        error: 'DLP/MIP operation failed.',
+        error: 'Regulatory draft failed.',
         details: errorMessage
       },
       headers: injectTraceContext(traceContext)

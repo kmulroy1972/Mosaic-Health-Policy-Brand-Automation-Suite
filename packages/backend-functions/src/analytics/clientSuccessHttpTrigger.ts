@@ -4,24 +4,24 @@ import { authenticateRequest } from '../auth/middleware';
 import { extractTraceContext, injectTraceContext } from '../telemetry/tracing';
 import { createLogger } from '../utils/logger';
 
-import { applyMIPLabel, type MIPLabel } from './mip';
-import { scanForPII } from './presidio';
+import { generateClientSuccessMetrics, type ClientSuccessRequest } from './clientSuccess';
+
 
 /**
- * HTTP trigger for DLP and MIP labeling.
- * POST /api/compliance/label
+ * HTTP trigger for client success analytics.
+ * GET /api/analytics/clientsuccess
  */
-export async function complianceLabelHttpTrigger(
+export async function clientSuccessHttpTrigger(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
   const traceContext = extractTraceContext(request);
   const logger = createLogger(context, request);
 
-  if (request.method !== 'POST') {
+  if (request.method !== 'GET') {
     return {
       status: 405,
-      jsonBody: { error: 'Method not allowed. Use POST.' },
+      jsonBody: { error: 'Method not allowed. Use GET.' },
       headers: injectTraceContext(traceContext)
     };
   }
@@ -41,40 +41,31 @@ export async function complianceLabelHttpTrigger(
   }
 
   try {
-    const body = (await request.json()) as {
-      documentPath?: string;
-      content?: string;
-      label?: MIPLabel;
-      autoMask?: boolean;
+    const clientId = request.query.get('clientId');
+    const startDate = request.query.get('startDate');
+    const endDate = request.query.get('endDate');
+
+    const metricsRequest: ClientSuccessRequest = {
+      clientId: clientId || undefined,
+      dateRange:
+        startDate && endDate
+          ? {
+              start: startDate,
+              end: endDate
+            }
+          : undefined
     };
 
-    // Detect PII if content provided
-    let piiResult = null;
-    if (body.content) {
-      piiResult = await scanForPII({ text: body.content });
-      logger.info('PII detection completed', {
-        entitiesFound: piiResult.entities.length,
-        correlationId: traceContext.correlationId
-      });
-    }
+    logger.info('Client success metrics requested', {
+      clientId,
+      correlationId: traceContext.correlationId
+    });
 
-    // Apply MIP label if provided
-    let labelResult = null;
-    if (body.documentPath && body.label) {
-      labelResult = await applyMIPLabel(body.documentPath, body.label);
-      logger.info('MIP label applied', {
-        labelId: labelResult.labelId,
-        correlationId: traceContext.correlationId
-      });
-    }
+    const result = await generateClientSuccessMetrics(metricsRequest, context);
 
     return {
       status: 200,
-      jsonBody: {
-        piiDetection: piiResult,
-        masking: body.autoMask && piiResult ? { maskedText: piiResult.anonymizedText } : null,
-        mipLabeling: labelResult
-      },
+      jsonBody: result,
       headers: {
         'Content-Type': 'application/json',
         ...injectTraceContext(traceContext)
@@ -83,14 +74,14 @@ export async function complianceLabelHttpTrigger(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error ?? 'unknown');
     logger.error(
-      'DLP/MIP operation failed',
+      'Client success metrics generation failed',
       error instanceof Error ? error : new Error(errorMessage)
     );
 
     return {
       status: 500,
       jsonBody: {
-        error: 'DLP/MIP operation failed.',
+        error: 'Client success metrics generation failed.',
         details: errorMessage
       },
       headers: injectTraceContext(traceContext)

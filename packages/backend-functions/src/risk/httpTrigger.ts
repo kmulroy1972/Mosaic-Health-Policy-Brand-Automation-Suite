@@ -4,14 +4,14 @@ import { authenticateRequest } from '../auth/middleware';
 import { extractTraceContext, injectTraceContext } from '../telemetry/tracing';
 import { createLogger } from '../utils/logger';
 
-import { applyMIPLabel, type MIPLabel } from './mip';
-import { scanForPII } from './presidio';
+import { scanContentRisk, type RiskScanRequest } from './scanner';
+
 
 /**
- * HTTP trigger for DLP and MIP labeling.
- * POST /api/compliance/label
+ * HTTP trigger for AI content risk scanning.
+ * POST /api/risk/scan
  */
-export async function complianceLabelHttpTrigger(
+export async function riskScanHttpTrigger(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -41,40 +41,27 @@ export async function complianceLabelHttpTrigger(
   }
 
   try {
-    const body = (await request.json()) as {
-      documentPath?: string;
-      content?: string;
-      label?: MIPLabel;
-      autoMask?: boolean;
-    };
+    const body = (await request.json()) as RiskScanRequest;
 
-    // Detect PII if content provided
-    let piiResult = null;
-    if (body.content) {
-      piiResult = await scanForPII({ text: body.content });
-      logger.info('PII detection completed', {
-        entitiesFound: piiResult.entities.length,
-        correlationId: traceContext.correlationId
-      });
+    if (!body.content || !body.contentType) {
+      return {
+        status: 400,
+        jsonBody: { error: 'Missing required fields: content, contentType' },
+        headers: injectTraceContext(traceContext)
+      };
     }
 
-    // Apply MIP label if provided
-    let labelResult = null;
-    if (body.documentPath && body.label) {
-      labelResult = await applyMIPLabel(body.documentPath, body.label);
-      logger.info('MIP label applied', {
-        labelId: labelResult.labelId,
-        correlationId: traceContext.correlationId
-      });
-    }
+    logger.info('Risk scan requested', {
+      contentType: body.contentType,
+      contentLength: body.content.length,
+      correlationId: traceContext.correlationId
+    });
+
+    const result = await scanContentRisk(body, context);
 
     return {
       status: 200,
-      jsonBody: {
-        piiDetection: piiResult,
-        masking: body.autoMask && piiResult ? { maskedText: piiResult.anonymizedText } : null,
-        mipLabeling: labelResult
-      },
+      jsonBody: result,
       headers: {
         'Content-Type': 'application/json',
         ...injectTraceContext(traceContext)
@@ -82,15 +69,12 @@ export async function complianceLabelHttpTrigger(
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error ?? 'unknown');
-    logger.error(
-      'DLP/MIP operation failed',
-      error instanceof Error ? error : new Error(errorMessage)
-    );
+    logger.error('Risk scan failed', error instanceof Error ? error : new Error(errorMessage));
 
     return {
       status: 500,
       jsonBody: {
-        error: 'DLP/MIP operation failed.',
+        error: 'Risk scan failed.',
         details: errorMessage
       },
       headers: injectTraceContext(traceContext)
