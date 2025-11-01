@@ -7,7 +7,10 @@ import {
   type RewriteRequestInput
 } from '@mhp/shared-brand-core';
 
+import { authenticateRequest } from '../auth/middleware';
+import { extractTraceContext, injectTraceContext } from '../telemetry/tracing';
 import { rewriteCache, generateCacheKey } from '../utils/cache';
+import { createLogger } from '../utils/logger';
 
 import { rewriteText } from './client';
 
@@ -19,6 +22,37 @@ export async function rewriteHttpTrigger(
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> {
+  const traceContext = extractTraceContext(request);
+  const logger = createLogger(context, request);
+
+  // Require authentication for rewrite endpoint (optional - can be disabled via env var)
+  const requireAuth = process.env.REQUIRE_AUTH_REWRITE !== 'false';
+
+  if (requireAuth) {
+    const authResult = await authenticateRequest(request, context, {
+      requireAuth: true,
+      allowedScopes: ['access_as_user'] // NAA scope from Office add-ins
+    });
+
+    if (!authResult.authenticated || !authResult.context) {
+      logger.warn('Unauthenticated rewrite request rejected', {
+        correlationId: traceContext.correlationId
+      });
+      return {
+        ...(authResult.error || {
+          status: 401,
+          jsonBody: { error: 'Unauthorized' }
+        }),
+        headers: injectTraceContext(traceContext)
+      };
+    }
+
+    logger.info('Authenticated rewrite request', {
+      userId: authResult.context.userId,
+      correlationId: traceContext.correlationId
+    });
+  }
+
   let body: RewriteRequestInput;
   try {
     body = (await request.json()) as RewriteRequestInput;

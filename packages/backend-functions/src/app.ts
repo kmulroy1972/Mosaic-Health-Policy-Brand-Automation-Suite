@@ -1,6 +1,7 @@
 import { app } from '@azure/functions';
 
 import { rewriteHttpTrigger } from './ai/httpTrigger';
+import { authValidateHttpTrigger } from './auth/httpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
@@ -62,6 +63,14 @@ app.http('complianceValidate', {
   route: 'api/compliance/validate',
   authLevel: 'anonymous',
   handler: complianceValidateHttpTrigger
+});
+
+// Authentication validation endpoint
+app.http('authValidate', {
+  methods: ['GET', 'POST'],
+  route: 'api/auth/validate',
+  authLevel: 'anonymous', // Allow anonymous to validate tokens
+  handler: authValidateHttpTrigger
 });
 
 // Import nightly compliance job to register timer
