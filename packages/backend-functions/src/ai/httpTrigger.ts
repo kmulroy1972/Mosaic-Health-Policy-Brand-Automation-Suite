@@ -7,6 +7,8 @@ import {
   type RewriteRequestInput
 } from '@mhp/shared-brand-core';
 
+import { rewriteCache, generateCacheKey } from '../utils/cache';
+
 import { rewriteText } from './client';
 
 const ALLOW_NON_AZURE_AI = process.env.ALLOW_NON_AZURE_AI === 'true';
@@ -64,7 +66,43 @@ export async function rewriteHttpTrigger(
   const start = Date.now();
 
   try {
+    // Check cache first (based on text content and goals)
+    const cacheKey = generateCacheKey(
+      'rewrite',
+      normalized.text.substring(0, 100), // First 100 chars as key component
+      normalized.goal?.join(',') || '',
+      normalized.tone?.join(',') || ''
+    );
+    const cached = rewriteCache.get(cacheKey);
+
+    if (cached) {
+      const elapsedMs = Date.now() - start;
+      context.log(
+        'ai_rewrite_cached',
+        createRewriteTelemetry({
+          result: 'success',
+          elapsedMs,
+          piiMode: normalized.piiMode,
+          provider: azureEndpoint ? 'azure' : 'other'
+        })
+      );
+
+      return {
+        status: 200,
+        jsonBody: {
+          text: cached,
+          modelId: 'cache',
+          cached: true
+        }
+      };
+    }
+
     const response = await rewriteText(normalized);
+
+    // Cache the response
+    if (response.text) {
+      rewriteCache.set(cacheKey, response.text, 1800); // 30 minutes
+    }
     const elapsedMs = Date.now() - start;
     context.log(
       'ai_rewrite_completed',

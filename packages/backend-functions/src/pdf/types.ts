@@ -22,3 +22,21 @@ export interface PdfValidationResponse {
   pdfua: PdfValidationReport;
   pdfa: PdfValidationReport;
 }
+
+// WCAG/508 Compliance types
+export interface AccessibilityIssue {
+  type: string;
+  severity: 'error' | 'warning' | 'info';
+  message: string;
+  element?: string;
+}
+
+export interface AccessibilityValidationRequest {
+  pdfBase64: string;
+}
+
+export interface AccessibilityValidationResponse {
+  issues: AccessibilityIssue[];
+  score: number; // 0-100
+  summary: string;
+}

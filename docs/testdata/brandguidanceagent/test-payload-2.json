@@ -1,0 +1,4 @@
+{
+  "documentText": "MHP Brand Compliance Report\n\nExecutive Summary\nThis report outlines the key findings from our brand compliance audit.\n\nFindings\n1. Document formatting inconsistencies\n2. Brand style violations\n3. Missing required headers",
+  "formatRules": "All documents must:\n- Use MHP Heading 1 for main section titles\n- Use MHP Heading 2 for subsections\n- Use Arial 12pt for body text\n- Include MHP Title style for document title\n- Follow left alignment for all text\n- Use consistent spacing (1.5 line height)"
+}

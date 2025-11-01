@@ -1,0 +1,4 @@
+{
+  "documentText": "This is a sample document that needs brand compliance checking. It contains various formatting issues including incorrect heading styles and inconsistent text formatting.",
+  "formatRules": "Documents must use MHP heading styles (MHP Heading 1, MHP Heading 2). Body text must be Arial 12pt. Headers should use MHP Title style. All text should be left-aligned. No custom fonts are allowed."
+}

@@ -1,0 +1,8 @@
+{
+  "summary": "The document generally follows brand guidelines but contains some formatting inconsistencies with heading styles and text alignment.",
+  "violations": [
+    "Document uses custom heading style instead of MHP Heading 1",
+    "Body text is 11pt instead of required 12pt",
+    "Some sections are center-aligned instead of left-aligned"
+  ]
+}

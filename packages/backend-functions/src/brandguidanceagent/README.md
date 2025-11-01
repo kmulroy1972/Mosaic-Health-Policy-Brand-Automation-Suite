@@ -2,7 +2,11 @@
 
 ## Overview
 
-BrandGuidanceAgent is an Azure Function that analyzes documents against brand formatting and compliance rules using Azure OpenAI GPT-4o.
+BrandGuidanceAgent is an Azure Function that analyzes documents against brand formatting and compliance rules using Azure OpenAI GPT-4o. It provides automated brand compliance checking to ensure all documents adhere to MHP (Mosaic Health Policy) brand guidelines.
+
+## Purpose
+
+This function serves as an automated brand compliance checker for documents, helping content creators and brand managers ensure consistency across all organizational materials. It analyzes document text and format rules to identify violations and provide actionable feedback.
 
 ## Endpoint
 
