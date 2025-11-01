@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/dashboard/', // Base path for Cloudways deployment
+  base: '/dashboard-new/', // Base path for Cloudways deployment (new path to bypass cache)
   server: {
     port: 5173,
     proxy: {
@@ -15,6 +15,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+        // Force new hash every build by including timestamp
+        manualChunks: undefined
+      }
+    }
   }
 });

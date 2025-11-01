@@ -40,11 +40,11 @@ jobs:
           echo "Uploading dashboard to Cloudways..."
           mkdir -p ~/.ssh
           ssh-keyscan -H $SFTP_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
-          # Remove old files first to avoid caching issues
-          sshpass -p "$SFTP_PASS" ssh -o StrictHostKeyChecking=accept-new $SFTP_USER@$SFTP_HOST "rm -rf public_html/dashboard/*"
-          # Upload new files
-          sshpass -p "$SFTP_PASS" rsync -avz \
+          # Deploy to new path to bypass all caching
+          echo "Deploying to dashboard-new/ (fresh path, no cache)"
+          sshpass -p "$SFTP_PASS" ssh -o StrictHostKeyChecking=accept-new $SFTP_USER@$SFTP_HOST "mkdir -p public_html/dashboard-new"
+          sshpass -p "$SFTP_PASS" rsync -avz --delete \
             -e "ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no" \
             apps/dashboard/dist/ \
-            $SFTP_USER@$SFTP_HOST:public_html/dashboard/
+            $SFTP_USER@$SFTP_HOST:public_html/dashboard-new/
           echo "✅ Deployment complete"
