@@ -43,6 +43,7 @@ import { notifySendHttpTrigger } from './notifications/httpTrigger';
 import { orchestrationHttpTrigger } from './orchestration/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
+import { platformOverviewHttpTrigger } from './platform/httpTrigger';
 import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
 import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
 import { regulationDraftHttpTrigger } from './regulation/httpTrigger';
@@ -53,6 +54,7 @@ import { scheduleReportHttpTrigger } from './scheduler/httpTrigger';
 import { brandSearchHttpTrigger } from './search/httpTrigger';
 import { semanticSearchHttpTrigger } from './search/semanticHttpTrigger';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
+import { subscriptionsHttpTrigger } from './subscriptions/httpTrigger';
 import { supportTicketHttpTrigger } from './support/httpTrigger';
 import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { versionHttpTrigger } from './system/versionHttpTrigger';
@@ -610,6 +612,22 @@ app.http('agentsAdaptive', {
   route: 'api/agents/adaptive',
   authLevel: 'anonymous', // Auth checked in handler
   handler: agentsAdaptiveHttpTrigger
+});
+
+// Platform architecture overview endpoint
+app.http('platformOverview', {
+  methods: ['GET'],
+  route: 'api/platform/overview',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: platformOverviewHttpTrigger
+});
+
+// Subscriptions endpoint
+app.http('subscriptions', {
+  methods: ['GET', 'POST', 'DELETE'],
+  route: 'api/subscriptions/{*subId}',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: subscriptionsHttpTrigger
 });
 
 // Import nightly compliance job to register timer
