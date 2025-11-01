@@ -4,6 +4,7 @@ import { rewriteHttpTrigger } from './ai/httpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
+import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
@@ -71,6 +72,21 @@ app.http('authValidate', {
   route: 'api/auth/validate',
   authLevel: 'anonymous', // Allow anonymous to validate tokens
   handler: authValidateHttpTrigger
+});
+
+// Data persistence endpoints
+app.http('dataLogs', {
+  methods: ['GET'],
+  route: 'api/data/logs',
+  authLevel: 'anonymous',
+  handler: dataLogsHttpTrigger
+});
+
+app.http('dataTemplates', {
+  methods: ['GET', 'POST'],
+  route: 'api/data/templates',
+  authLevel: 'anonymous',
+  handler: dataTemplatesHttpTrigger
 });
 
 // Import nightly compliance job to register timer
