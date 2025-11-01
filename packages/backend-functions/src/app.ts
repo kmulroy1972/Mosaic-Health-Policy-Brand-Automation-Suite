@@ -10,6 +10,7 @@ import { audioHttpTrigger } from './audio/audioHttpTrigger';
 import { audioSummaryHttpTrigger } from './audio/httpTrigger';
 import { auditEvidenceHttpTrigger } from './audit/evidenceHttpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
+import { billingSummaryHttpTrigger } from './billing/httpTrigger';
 import { brandQAHttpTrigger } from './brand/qaHttpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
 import { briefsWorkflowHttpTrigger } from './briefs/httpTrigger';
@@ -32,6 +33,7 @@ import { healthHttpTrigger } from './health/httpTrigger';
 import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
 import { knowledgeQueryHttpTrigger } from './knowledge/httpTrigger';
 import { faqSearchHttpTrigger } from './knowledgebase/httpTrigger';
+import { learningFeedbackHttpTrigger } from './learning/httpTrigger';
 import { legislationTrackHttpTrigger } from './legislation/httpTrigger';
 import { mediaAssembleHttpTrigger } from './media/httpTrigger';
 import { memoryConversationHttpTrigger } from './memory/httpTrigger';
@@ -43,12 +45,14 @@ import { validatePdfHttpTrigger } from './pdf/validate';
 import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
 import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
 import { regulationDraftHttpTrigger } from './regulation/httpTrigger';
+import { executiveDeckHttpTrigger } from './reports/executiveDeckHttpTrigger';
 import { reportsGenerateHttpTrigger } from './reports/httpTrigger';
 import { riskScanHttpTrigger } from './risk/httpTrigger';
 import { scheduleReportHttpTrigger } from './scheduler/httpTrigger';
 import { brandSearchHttpTrigger } from './search/httpTrigger';
 import { semanticSearchHttpTrigger } from './search/semanticHttpTrigger';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
+import { supportTicketHttpTrigger } from './support/httpTrigger';
 import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { versionHttpTrigger } from './system/versionHttpTrigger';
 import { taggingExtractHttpTrigger } from './tagging/httpTrigger';
@@ -565,6 +569,38 @@ app.http('benchmark', {
   route: 'api/analytics/benchmark',
   authLevel: 'anonymous', // Auth checked in handler
   handler: benchmarkHttpTrigger
+});
+
+// Executive deck generation endpoint
+app.http('executiveDeck', {
+  methods: ['POST'],
+  route: 'api/reports/executivedeck',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: executiveDeckHttpTrigger
+});
+
+// Support ticketing endpoint
+app.http('supportTicket', {
+  methods: ['POST'],
+  route: 'api/support/ticket',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: supportTicketHttpTrigger
+});
+
+// Billing summary endpoint
+app.http('billingSummary', {
+  methods: ['GET'],
+  route: 'api/billing/summary',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: billingSummaryHttpTrigger
+});
+
+// Continuous learning feedback endpoint
+app.http('learningFeedback', {
+  methods: ['POST'],
+  route: 'api/learning/feedback',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: learningFeedbackHttpTrigger
 });
 
 // Import nightly compliance job to register timer
