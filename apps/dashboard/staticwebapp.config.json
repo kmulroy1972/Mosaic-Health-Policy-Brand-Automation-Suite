@@ -29,12 +29,6 @@
       "allowedRoles": ["anonymous"]
     },
     {
-      "route": "/assets/*",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
       "route": "/*",
       "serve": "/index.html",
       "statusCode": 200
