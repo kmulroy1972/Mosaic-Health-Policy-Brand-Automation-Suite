@@ -225,9 +225,27 @@ app.http('brandSearch', {
   handler: brandSearchHttpTrigger
 });
 
+// Experiments endpoint
+app.http('experimentsReport', {
+  methods: ['GET'],
+  route: 'api/experiments/report',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: experimentsReportHttpTrigger
+});
+
+// Red team endpoint
+app.http('redteamRun', {
+  methods: ['POST'],
+  route: 'api/redteam/run',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: redteamRunHttpTrigger
+});
+
 // Import nightly compliance job to register timer
 import './compliance/nightlyComplianceJob';
 // Import secret rotation job to register timer
 import './secrets/rotationJob';
 // Import weekly self-audit job to register timer
 import './system/selfAuditJob';
+// Import nightly confidence run job to register timer
+import './system/confidenceJob';
