@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-const API_BASE =
-  (import.meta.env as { VITE_API_URL?: string }).VITE_API_URL ??
-  'https://mhpbrandfunctions38e5971a.azurewebsites.net';
+import { API_BASE } from '../lib/api';
 
 export default function Dashboard() {
   const [health, setHealth] = React.useState<'checking' | 'ok' | 'fail'>('checking');

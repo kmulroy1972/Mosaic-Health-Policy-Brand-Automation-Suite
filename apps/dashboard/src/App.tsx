@@ -1,9 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 
+import AnalyticsPage from './pages/Analytics';
+import CompliancePage from './pages/Compliance';
 import Dashboard from './pages/Dashboard';
+import TemplatesPage from './pages/Templates';
 
 function inOffice(): boolean {
   return typeof (window as any).Office !== 'undefined' && !!(window as any).Office?.context?.host;
+}
+
+function Nav() {
+  const { pathname } = useLocation();
+  const link = (to: string, label: string) => (
+    <Link
+      to={to}
+      style={{
+        marginRight: 16,
+        textDecoration: pathname === to ? 'underline' : 'none'
+      }}
+    >
+      {label}
+    </Link>
+  );
+  return (
+    <div style={{ padding: '12px 24px', borderBottom: '1px solid #eee' }}>
+      {link('/dashboard', 'Dashboard')}
+      {link('/templates', 'Templates')}
+      {link('/compliance', 'Compliance')}
+      {link('/analytics', 'Analytics')}
+    </div>
+  );
 }
 
 export default function App() {
@@ -21,20 +47,14 @@ export default function App() {
   // Standalone dashboard (browser mode)
   return (
     <BrowserRouter basename="/dashboard">
+      <Nav />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route
-          path="/templates"
-          element={<div style={{ padding: 24 }}>Templates (coming soon)</div>}
-        />
-        <Route
-          path="/compliance"
-          element={<div style={{ padding: 24 }}>Compliance (coming soon)</div>}
-        />
-        <Route
-          path="/analytics"
-          element={<div style={{ padding: 24 }}>Analytics (coming soon)</div>}
-        />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/templates" element={<TemplatesPage />} />
+        <Route path="/compliance" element={<CompliancePage />} />
+        <Route path="/analytics" element={<AnalyticsPage />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );
