@@ -31,6 +31,10 @@ jobs:
           npm run build
           echo "=== Build output ==="
           ls -la dist/
+          echo "=== Verifying bundle ==="
+          cat dist/index.html | grep -o 'index-[^"]*\.js'
+          echo "=== Assets ==="
+          ls -la dist/assets/
       - name: Deploy to Cloudways via SFTP
         env:
           SFTP_HOST: ${{ secrets.CLOUDWAYS_SFTP_HOST }}
@@ -47,4 +51,12 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no" \
             apps/dashboard/dist/ \
             $SFTP_USER@$SFTP_HOST:public_html/dashboard-new/
+          echo "✅ Files deployed"
+          echo "=== Verifying deployment ==="
+          sshpass -p "$SFTP_PASS" ssh -o StrictHostKeyChecking=accept-new $SFTP_USER@$SFTP_HOST "ls -la public_html/dashboard-new/assets/ | head -5"
           echo "✅ Deployment complete"
+          echo ""
+          echo "⚠️  NOTE: Cloudways uses nginx (not Apache)"
+          echo "   .htaccess files are NOT processed"
+          echo "   Configure nginx via Cloudways control panel"
+          echo "   See: CLOUDWAYS_NGINX_SETUP.md"
