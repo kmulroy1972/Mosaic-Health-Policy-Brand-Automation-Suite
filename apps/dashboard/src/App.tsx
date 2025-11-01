@@ -34,7 +34,7 @@ interface AnalyticsData {
 }
 
 const API_BASE =
-  import.meta.env.VITE_API_URL || 'https://mhpbrandfunctions38e5971a.azurewebsites.net';
+  (import.meta.env as { VITE_API_URL?: string }).VITE_API_URL || 'https://api.mosaicpolicy.com';
 
 function App() {
   const [endpoints, setEndpoints] = useState<EndpointStatus[]>([]);
@@ -74,7 +74,7 @@ function App() {
         const response = await axios.get(`${API_BASE}${endpoint.path}`, {
           ...config,
           timeout: 5000,
-          validateStatus: (status) => status < 500 // Accept 2xx, 3xx, 4xx as "ok"
+          validateStatus: (status: number) => status < 500 // Accept 2xx, 3xx, 4xx as "ok"
         });
         results.push({
           endpoint: endpoint.name,
