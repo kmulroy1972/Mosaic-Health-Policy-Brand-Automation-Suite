@@ -10,9 +10,12 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings=0"
   },
   "dependencies": {
+    "@fluentui/react-components": "^9.72.4",
+    "@fluentui/react-icons": "^2.0.313",
+    "axios": "^1.7.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "axios": "^1.7.2"
+    "react-router-dom": "^7.9.5"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/dashboard-new/', // Base path for Cloudways deployment (new path to bypass cache)
+  base: '/dashboard/', // Base path for deployment
   server: {
     port: 5173,
     proxy: {
