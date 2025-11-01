@@ -27,11 +27,6 @@
     {
       "route": "/api/*",
       "allowedRoles": ["anonymous"]
-    },
-    {
-      "route": "/*",
-      "serve": "/index.html",
-      "statusCode": 200
     }
   ],
   "responseOverrides": {
@@ -41,6 +36,6 @@
     }
   },
   "globalHeaders": {
-    "Content-Security-Policy": "default-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://white-smoke-0061d650f.3.azurestaticapps.net https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.officeapps.live.com https://appsforoffice.microsoft.com; style-src 'self' 'unsafe-inline' https://*.officeapps.live.com; frame-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://telemetryservice.firstpartyapps.oaspapps.com; connect-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://white-smoke-0061d650f.3.azurestaticapps.net https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com;"
+    "Content-Security-Policy": "default-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com https://*.azurewebsites.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com; style-src 'self' 'unsafe-inline' https://*.officeapps.live.com https://cdn.mosaicpolicy.com; frame-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://telemetryservice.firstpartyapps.oaspapps.com; connect-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://cdn.mosaicpolicy.com https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com https://*.azurewebsites.net;"
   }
 }

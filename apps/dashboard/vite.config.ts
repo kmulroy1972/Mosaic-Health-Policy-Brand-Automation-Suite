@@ -3,11 +3,12 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
+  base: '/dashboard/', // Base path for Cloudways deployment
   server: {
     port: 5173,
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'https://mhpbrandfunctions38e5971a.azurewebsites.net',
+        target: process.env.VITE_API_URL || 'https://api.mosaicpolicy.com',
         changeOrigin: true
       }
     }

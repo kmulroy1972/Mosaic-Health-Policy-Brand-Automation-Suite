@@ -1,0 +1,46 @@
+name: Deploy Dashboard to Cloudways
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/dashboard/**'
+      - '.github/workflows/deploy-dashboard-cloudways.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-dashboard:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Dashboard to Cloudways
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: |
+          cd apps/dashboard
+          npm install
+      - name: Build dashboard
+        run: |
+          cd apps/dashboard
+          npm run build
+          echo "=== Build output ==="
+          ls -la dist/
+      - name: Deploy to Cloudways via SFTP
+        env:
+          SFTP_HOST: ${{ secrets.CLOUDWAYS_SFTP_HOST }}
+          SFTP_USER: ${{ secrets.CLOUDWAYS_SFTP_USER }}
+          SFTP_PASS: ${{ secrets.CLOUDWAYS_SFTP_PASS }}
+        run: |
+          echo "Uploading dashboard to Cloudways..."
+          mkdir -p ~/.ssh
+          ssh-keyscan -H $SFTP_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
+          sshpass -p "$SFTP_PASS" rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no" \
+            apps/dashboard/dist/ \
+            $SFTP_USER@$SFTP_HOST:public_html/dashboard/
