@@ -1,5 +1,6 @@
 import { app } from '@azure/functions';
 
+import { agentsAdaptiveHttpTrigger } from './agents/httpTrigger';
 import { rewriteHttpTrigger } from './ai/httpTrigger';
 import { promptTuneHttpTrigger } from './ai/promptTuneHttpTrigger';
 import { benchmarkHttpTrigger } from './analytics/benchmarkHttpTrigger';
@@ -601,6 +602,14 @@ app.http('learningFeedback', {
   route: 'api/learning/feedback',
   authLevel: 'anonymous', // Auth checked in handler
   handler: learningFeedbackHttpTrigger
+});
+
+// Adaptive learning agents endpoint
+app.http('agentsAdaptive', {
+  methods: ['POST'],
+  route: 'api/agents/adaptive',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: agentsAdaptiveHttpTrigger
 });
 
 // Import nightly compliance job to register timer
