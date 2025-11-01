@@ -28,13 +28,13 @@ export default function Dashboard() {
       <div
         style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginTop: 24 }}
       >
-        <a href="/templates" style={card}>
+        <a href="#/templates" style={card}>
           Templates
         </a>
-        <a href="/compliance" style={card}>
+        <a href="#/compliance" style={card}>
           Compliance Scan
         </a>
-        <a href="/analytics" style={card}>
+        <a href="#/analytics" style={card}>
           Analytics
         </a>
       </div>

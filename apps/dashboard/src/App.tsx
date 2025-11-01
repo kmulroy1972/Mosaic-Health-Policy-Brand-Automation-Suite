@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 
 import AnalyticsPage from './pages/Analytics';
 import CompliancePage from './pages/Compliance';
@@ -45,8 +45,10 @@ export default function App() {
   }
 
   // Standalone dashboard (browser mode)
+  // Using HashRouter instead of BrowserRouter for Cloudways compatibility
+  // (Cloudways doesn't allow custom nginx config for SPA routing)
   return (
-    <BrowserRouter basename="/dashboard">
+    <HashRouter>
       <Nav />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -56,6 +58,6 @@ export default function App() {
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
