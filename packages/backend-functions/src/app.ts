@@ -8,6 +8,8 @@ import { complianceLabelHttpTrigger } from './compliance/dlpHttpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
 import { costSummaryHttpTrigger } from './cost/httpTrigger';
 import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigger';
+import { experimentsReportHttpTrigger } from './experiments/httpTrigger';
+import { redteamRunHttpTrigger } from './guardrails/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
