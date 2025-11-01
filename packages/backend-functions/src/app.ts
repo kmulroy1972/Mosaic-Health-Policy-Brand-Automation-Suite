@@ -70,7 +70,7 @@ import { visualsChartHttpTrigger } from './visuals/httpTrigger';
 // Health check endpoint
 app.http('health', {
   methods: ['GET'],
-  route: 'api/health',
+  route: 'health',
   authLevel: 'anonymous',
   handler: healthHttpTrigger
 });
@@ -78,7 +78,7 @@ app.http('health', {
 // Templates endpoint
 app.http('templates', {
   methods: ['GET'],
-  route: 'api/templates',
+  route: 'templates',
   authLevel: 'anonymous',
   handler: templatesHttpTrigger
 });
@@ -86,7 +86,7 @@ app.http('templates', {
 // AI rewrite endpoint
 app.http('rewrite', {
   methods: ['POST'],
-  route: 'api/rewrite',
+  route: 'rewrite',
   authLevel: 'anonymous',
   handler: rewriteHttpTrigger
 });
@@ -94,7 +94,7 @@ app.http('rewrite', {
 // PDF conversion endpoint
 app.http('convertPdfA', {
   methods: ['POST'],
-  route: 'api/pdf/convert',
+  route: 'pdf/convert',
   authLevel: 'anonymous',
   handler: convertPdfAHttpTrigger
 });
@@ -102,7 +102,7 @@ app.http('convertPdfA', {
 // PDF validation endpoint
 app.http('validatePdf', {
   methods: ['POST'],
-  route: 'api/pdf/validate',
+  route: 'pdf/validate',
   authLevel: 'anonymous',
   handler: validatePdfHttpTrigger
 });
@@ -110,7 +110,7 @@ app.http('validatePdf', {
 // Brand guidance agent endpoint
 app.http('brandguidanceagent', {
   methods: ['POST'],
-  route: 'api/brandguidanceagent',
+  route: 'brandguidanceagent',
   authLevel: 'anonymous',
   handler: brandGuidanceAgentHttpTrigger
 });
@@ -118,7 +118,7 @@ app.http('brandguidanceagent', {
 // Compliance validation endpoint
 app.http('complianceValidate', {
   methods: ['POST'],
-  route: 'api/compliance/validate',
+  route: 'compliance/validate',
   authLevel: 'anonymous',
   handler: complianceValidateHttpTrigger
 });
@@ -126,7 +126,7 @@ app.http('complianceValidate', {
 // Authentication validation endpoint
 app.http('authValidate', {
   methods: ['GET', 'POST'],
-  route: 'api/auth/validate',
+  route: 'auth/validate',
   authLevel: 'anonymous', // Allow anonymous to validate tokens
   handler: authValidateHttpTrigger
 });
@@ -134,14 +134,14 @@ app.http('authValidate', {
 // Data persistence endpoints
 app.http('dataLogs', {
   methods: ['GET'],
-  route: 'api/data/logs',
+  route: 'data/logs',
   authLevel: 'anonymous',
   handler: dataLogsHttpTrigger
 });
 
 app.http('dataTemplates', {
   methods: ['GET', 'POST'],
-  route: 'api/data/templates',
+  route: 'data/templates',
   authLevel: 'anonymous',
   handler: dataTemplatesHttpTrigger
 });
@@ -149,14 +149,14 @@ app.http('dataTemplates', {
 // Storage endpoints
 app.http('storageUpload', {
   methods: ['POST'],
-  route: 'api/storage/upload',
+  route: 'storage/upload',
   authLevel: 'anonymous', // Auth checked in handler
   handler: storageUploadHttpTrigger
 });
 
 app.http('storageDownload', {
   methods: ['GET'],
-  route: 'api/storage/download',
+  route: 'storage/download',
   authLevel: 'anonymous', // Auth checked in handler
   handler: storageDownloadHttpTrigger
 });
@@ -164,7 +164,7 @@ app.http('storageDownload', {
 // Analytics endpoint
 app.http('analyticsReport', {
   methods: ['GET'],
-  route: 'api/analytics/report',
+  route: 'analytics/report',
   authLevel: 'anonymous',
   handler: analyticsReportHttpTrigger
 });
@@ -172,7 +172,7 @@ app.http('analyticsReport', {
 // System status endpoint
 app.http('systemStatus', {
   methods: ['GET'],
-  route: 'api/system/status',
+  route: 'system/status',
   authLevel: 'anonymous',
   handler: systemStatusHttpTrigger
 });
@@ -180,7 +180,7 @@ app.http('systemStatus', {
 // i18n endpoint
 app.http('i18nDetect', {
   methods: ['GET'],
-  route: 'api/i18n/detect',
+  route: 'i18n/detect',
   authLevel: 'anonymous',
   handler: i18nDetectHttpTrigger
 });
@@ -188,14 +188,14 @@ app.http('i18nDetect', {
 // User management endpoints
 app.http('usersList', {
   methods: ['GET'],
-  route: 'api/users/list',
+  route: 'users/list',
   authLevel: 'anonymous', // Auth checked in handler
   handler: usersListHttpTrigger
 });
 
 app.http('usersAdd', {
   methods: ['POST'],
-  route: 'api/users/add',
+  route: 'users/add',
   authLevel: 'anonymous', // Auth checked in handler
   handler: usersAddHttpTrigger
 });
@@ -203,7 +203,7 @@ app.http('usersAdd', {
 // Version endpoint
 app.http('version', {
   methods: ['GET'],
-  route: 'api/version',
+  route: 'version',
   authLevel: 'anonymous',
   handler: versionHttpTrigger
 });
@@ -211,7 +211,7 @@ app.http('version', {
 // Policy brief endpoint
 app.http('policyBrief', {
   methods: ['POST'],
-  route: 'api/policybrief',
+  route: 'policybrief',
   authLevel: 'anonymous', // Auth checked in handler
   handler: policyBriefHttpTrigger
 });
@@ -219,7 +219,7 @@ app.http('policyBrief', {
 // Cost summary endpoint
 app.http('costSummary', {
   methods: ['GET'],
-  route: 'api/cost/summary',
+  route: 'cost/summary',
   authLevel: 'anonymous', // Auth checked in handler
   handler: costSummaryHttpTrigger
 });
@@ -227,14 +227,14 @@ app.http('costSummary', {
 // Privacy endpoints
 app.http('privacyExport', {
   methods: ['GET'],
-  route: 'api/privacy/export',
+  route: 'privacy/export',
   authLevel: 'anonymous', // Auth checked in handler
   handler: privacyExportHttpTrigger
 });
 
 app.http('privacyDelete', {
   methods: ['DELETE'],
-  route: 'api/privacy/delete',
+  route: 'privacy/delete',
   authLevel: 'anonymous', // Auth checked in handler
   handler: privacyDeleteHttpTrigger
 });
@@ -242,14 +242,14 @@ app.http('privacyDelete', {
 // Tenant management endpoints
 app.http('tenantsList', {
   methods: ['GET'],
-  route: 'api/tenants/list',
+  route: 'tenants/list',
   authLevel: 'anonymous', // Auth checked in handler
   handler: tenantsListHttpTrigger
 });
 
 app.http('tenantsConfig', {
   methods: ['GET'],
-  route: 'api/tenants/config',
+  route: 'tenants/config',
   authLevel: 'anonymous', // Auth checked in handler
   handler: tenantsConfigHttpTrigger
 });
@@ -257,7 +257,7 @@ app.http('tenantsConfig', {
 // DLP/MIP labeling endpoint
 app.http('complianceLabel', {
   methods: ['POST'],
-  route: 'api/compliance/label',
+  route: 'compliance/label',
   authLevel: 'anonymous', // Auth checked in handler
   handler: complianceLabelHttpTrigger
 });
@@ -265,7 +265,7 @@ app.http('complianceLabel', {
 // Brand search endpoint
 app.http('brandSearch', {
   methods: ['GET'],
-  route: 'api/brand/search',
+  route: 'brand/search',
   authLevel: 'anonymous', // Auth checked in handler
   handler: brandSearchHttpTrigger
 });
@@ -273,7 +273,7 @@ app.http('brandSearch', {
 // Experiments endpoint
 app.http('experimentsReport', {
   methods: ['GET'],
-  route: 'api/experiments/report',
+  route: 'experiments/report',
   authLevel: 'anonymous', // Auth checked in handler
   handler: experimentsReportHttpTrigger
 });
@@ -281,7 +281,7 @@ app.http('experimentsReport', {
 // Red team endpoint
 app.http('redteamRun', {
   methods: ['POST'],
-  route: 'api/redteam/run',
+  route: 'redteam/run',
   authLevel: 'anonymous', // Auth checked in handler
   handler: redteamRunHttpTrigger
 });
@@ -289,7 +289,7 @@ app.http('redteamRun', {
 // Gamma export endpoint
 app.http('gammaExport', {
   methods: ['POST'],
-  route: 'api/gamma/export',
+  route: 'gamma/export',
   authLevel: 'anonymous', // Auth checked in handler
   handler: gammaExportHttpTrigger
 });
@@ -297,7 +297,7 @@ app.http('gammaExport', {
 // Reports generation endpoint
 app.http('reportsGenerate', {
   methods: ['POST'],
-  route: 'api/reports/generate',
+  route: 'reports/generate',
   authLevel: 'anonymous', // Auth checked in handler
   handler: reportsGenerateHttpTrigger
 });
@@ -305,7 +305,7 @@ app.http('reportsGenerate', {
 // Visuals/chart endpoint
 app.http('visualsChart', {
   methods: ['POST'],
-  route: 'api/visuals/chart',
+  route: 'visuals/chart',
   authLevel: 'anonymous', // Auth checked in handler
   handler: visualsChartHttpTrigger
 });
@@ -313,7 +313,7 @@ app.http('visualsChart', {
 // Policy briefs workflow endpoints
 app.http('briefsWorkflow', {
   methods: ['POST'],
-  route: 'api/briefs/{action}',
+  route: 'briefs/{action}',
   authLevel: 'anonymous', // Auth checked in handler
   handler: briefsWorkflowHttpTrigger
 });
@@ -321,7 +321,7 @@ app.http('briefsWorkflow', {
 // Knowledge graph query endpoint
 app.http('graphQuery', {
   methods: ['POST'],
-  route: 'api/graph/query',
+  route: 'graph/query',
   authLevel: 'anonymous', // Auth checked in handler
   handler: graphQueryHttpTrigger
 });
@@ -329,7 +329,7 @@ app.http('graphQuery', {
 // Narrative composition endpoint
 app.http('narrativesCompose', {
   methods: ['POST'],
-  route: 'api/narratives/compose',
+  route: 'narratives/compose',
   authLevel: 'anonymous', // Auth checked in handler
   handler: narrativesComposeHttpTrigger
 });
@@ -337,7 +337,7 @@ app.http('narrativesCompose', {
 // Audio summary endpoint
 app.http('audioSummary', {
   methods: ['POST'],
-  route: 'api/audio/summary',
+  route: 'audio/summary',
   authLevel: 'anonymous', // Auth checked in handler
   handler: audioSummaryHttpTrigger
 });
@@ -345,7 +345,7 @@ app.http('audioSummary', {
 // Media assembly endpoint
 app.http('mediaAssemble', {
   methods: ['POST'],
-  route: 'api/media/assemble',
+  route: 'media/assemble',
   authLevel: 'anonymous', // Auth checked in handler
   handler: mediaAssembleHttpTrigger
 });
@@ -353,7 +353,7 @@ app.http('mediaAssemble', {
 // Scheduling endpoint
 app.http('scheduleReport', {
   methods: ['POST'],
-  route: 'api/schedule/report',
+  route: 'schedule/report',
   authLevel: 'anonymous', // Auth checked in handler
   handler: scheduleReportHttpTrigger
 });
@@ -361,7 +361,7 @@ app.http('scheduleReport', {
 // Tagging endpoint
 app.http('taggingExtract', {
   methods: ['POST'],
-  route: 'api/tagging/extract',
+  route: 'tagging/extract',
   authLevel: 'anonymous', // Auth checked in handler
   handler: taggingExtractHttpTrigger
 });
@@ -369,7 +369,7 @@ app.http('taggingExtract', {
 // Translation endpoint
 app.http('translate', {
   methods: ['POST'],
-  route: 'api/translate',
+  route: 'translate',
   authLevel: 'anonymous', // Auth checked in handler
   handler: translateHttpTrigger
 });
@@ -377,7 +377,7 @@ app.http('translate', {
 // Ethics check endpoint
 app.http('ethicsCheck', {
   methods: ['POST'],
-  route: 'api/ethics/check',
+  route: 'ethics/check',
   authLevel: 'anonymous', // Auth checked in handler
   handler: ethicsCheckHttpTrigger
 });
@@ -385,7 +385,7 @@ app.http('ethicsCheck', {
 // Notifications endpoint
 app.http('notifySend', {
   methods: ['POST'],
-  route: 'api/notify/send',
+  route: 'notify/send',
   authLevel: 'anonymous', // Auth checked in handler
   handler: notifySendHttpTrigger
 });
@@ -393,7 +393,7 @@ app.http('notifySend', {
 // Brand QA endpoint
 app.http('brandQA', {
   methods: ['GET'],
-  route: 'api/brand/qa',
+  route: 'brand/qa',
   authLevel: 'anonymous', // Auth checked in handler
   handler: brandQAHttpTrigger
 });
@@ -401,7 +401,7 @@ app.http('brandQA', {
 // Funding prediction endpoint
 app.http('fundingPredict', {
   methods: ['POST'],
-  route: 'api/funding/predict',
+  route: 'funding/predict',
   authLevel: 'anonymous', // Auth checked in handler
   handler: fundingPredictHttpTrigger
 });
@@ -409,7 +409,7 @@ app.http('fundingPredict', {
 // Legislation tracking endpoint
 app.http('legislationTrack', {
   methods: ['POST'],
-  route: 'api/legislation/track',
+  route: 'legislation/track',
   authLevel: 'anonymous', // Auth checked in handler
   handler: legislationTrackHttpTrigger
 });
@@ -417,7 +417,7 @@ app.http('legislationTrack', {
 // Compliance dashboard v2 endpoint
 app.http('complianceDashboard', {
   methods: ['GET'],
-  route: 'api/compliance/dashboard',
+  route: 'compliance/dashboard',
   authLevel: 'anonymous', // Auth checked in handler
   handler: complianceDashboardHttpTrigger
 });
@@ -425,7 +425,7 @@ app.http('complianceDashboard', {
 // Collaboration session endpoint
 app.http('collabSession', {
   methods: ['POST'],
-  route: 'api/collab/session',
+  route: 'collab/session',
   authLevel: 'anonymous', // Auth checked in handler
   handler: collabSessionHttpTrigger
 });
@@ -433,7 +433,7 @@ app.http('collabSession', {
 // Semantic search endpoint
 app.http('semanticSearch', {
   methods: ['POST'],
-  route: 'api/search/query',
+  route: 'search/query',
   authLevel: 'anonymous', // Auth checked in handler
   handler: semanticSearchHttpTrigger
 });
@@ -441,7 +441,7 @@ app.http('semanticSearch', {
 // FAQ search endpoint
 app.http('faqSearch', {
   methods: ['POST'],
-  route: 'api/faq/search',
+  route: 'faq/search',
   authLevel: 'anonymous', // Auth checked in handler
   handler: faqSearchHttpTrigger
 });
@@ -449,7 +449,7 @@ app.http('faqSearch', {
 // Real-time compliance endpoint (Presidio + MIP)
 app.http('complianceRealtime', {
   methods: ['POST'],
-  route: 'api/compliance/realtime',
+  route: 'compliance/realtime',
   authLevel: 'anonymous', // Auth checked in handler
   handler: complianceRealtimeHttpTrigger
 });
@@ -457,7 +457,7 @@ app.http('complianceRealtime', {
 // Configuration service endpoint
 app.http('config', {
   methods: ['GET', 'PUT'],
-  route: 'api/config',
+  route: 'config',
   authLevel: 'anonymous', // Auth checked in handler
   handler: configHttpTrigger
 });
@@ -465,7 +465,7 @@ app.http('config', {
 // Knowledge graph query endpoint
 app.http('knowledgeQuery', {
   methods: ['POST'],
-  route: 'api/knowledge/query',
+  route: 'knowledge/query',
   authLevel: 'anonymous', // Auth checked in handler
   handler: knowledgeQueryHttpTrigger
 });
@@ -473,7 +473,7 @@ app.http('knowledgeQuery', {
 // Audit evidence pack endpoint
 app.http('auditEvidence', {
   methods: ['POST'],
-  route: 'api/audit/evidence',
+  route: 'audit/evidence',
   authLevel: 'anonymous', // Auth checked in handler
   handler: auditEvidenceHttpTrigger
 });
@@ -481,7 +481,7 @@ app.http('auditEvidence', {
 // Prompt tuning endpoint
 app.http('promptTune', {
   methods: ['POST'],
-  route: 'api/prompts/tune',
+  route: 'prompts/tune',
   authLevel: 'anonymous', // Auth checked in handler
   handler: promptTuneHttpTrigger
 });
@@ -489,7 +489,7 @@ app.http('promptTune', {
 // Conversational memory endpoint
 app.http('memoryConversation', {
   methods: ['POST'],
-  route: 'api/memory/conversation',
+  route: 'memory/conversation',
   authLevel: 'anonymous', // Auth checked in handler
   handler: memoryConversationHttpTrigger
 });
@@ -497,7 +497,7 @@ app.http('memoryConversation', {
 // Predictive maintenance analytics endpoint
 app.http('analyticsPredict', {
   methods: ['GET'],
-  route: 'api/analytics/predict',
+  route: 'analytics/predict',
   authLevel: 'anonymous', // Auth checked in handler
   handler: analyticsPredictHttpTrigger
 });
@@ -505,7 +505,7 @@ app.http('analyticsPredict', {
 // Risk scanner endpoint
 app.http('riskScan', {
   methods: ['POST'],
-  route: 'api/risk/scan',
+  route: 'risk/scan',
   authLevel: 'anonymous', // Auth checked in handler
   handler: riskScanHttpTrigger
 });
@@ -513,7 +513,7 @@ app.http('riskScan', {
 // Audio generation/transcription endpoints
 app.http('audioGenerate', {
   methods: ['POST'],
-  route: 'api/audio/{action}',
+  route: 'audio/{action}',
   authLevel: 'anonymous', // Auth checked in handler
   handler: audioHttpTrigger
 });
@@ -521,7 +521,7 @@ app.http('audioGenerate', {
 // Video annotation endpoint
 app.http('videoAnnotate', {
   methods: ['POST'],
-  route: 'api/video/annotate',
+  route: 'video/annotate',
   authLevel: 'anonymous', // Auth checked in handler
   handler: videoAnnotateHttpTrigger
 });
@@ -529,7 +529,7 @@ app.http('videoAnnotate', {
 // Orchestration endpoint
 app.http('orchestration', {
   methods: ['GET', 'POST'],
-  route: 'api/orchestration/workflow',
+  route: 'orchestration/workflow',
   authLevel: 'anonymous', // Auth checked in handler
   handler: orchestrationHttpTrigger
 });
@@ -537,7 +537,7 @@ app.http('orchestration', {
 // Semantic tagging endpoint
 app.http('taggingSemantic', {
   methods: ['POST'],
-  route: 'api/tagging/semantic',
+  route: 'tagging/semantic',
   authLevel: 'anonymous', // Auth checked in handler
   handler: taggingSemanticHttpTrigger
 });
@@ -545,7 +545,7 @@ app.http('taggingSemantic', {
 // Client success analytics endpoint
 app.http('clientSuccess', {
   methods: ['GET'],
-  route: 'api/analytics/clientsuccess',
+  route: 'analytics/clientsuccess',
   authLevel: 'anonymous', // Auth checked in handler
   handler: clientSuccessHttpTrigger
 });
@@ -553,7 +553,7 @@ app.http('clientSuccess', {
 // Regulatory writing endpoint
 app.http('regulationDraft', {
   methods: ['POST'],
-  route: 'api/regulation/draft',
+  route: 'regulation/draft',
   authLevel: 'anonymous', // Auth checked in handler
   handler: regulationDraftHttpTrigger
 });
@@ -561,7 +561,7 @@ app.http('regulationDraft', {
 // Ethics board dashboard endpoint
 app.http('ethicsDashboard', {
   methods: ['GET'],
-  route: 'api/ethics/dashboard',
+  route: 'ethics/dashboard',
   authLevel: 'anonymous', // Auth checked in handler
   handler: ethicsDashboardHttpTrigger
 });
@@ -569,7 +569,7 @@ app.http('ethicsDashboard', {
 // Benchmarking endpoint
 app.http('benchmark', {
   methods: ['POST'],
-  route: 'api/analytics/benchmark',
+  route: 'analytics/benchmark',
   authLevel: 'anonymous', // Auth checked in handler
   handler: benchmarkHttpTrigger
 });
@@ -577,7 +577,7 @@ app.http('benchmark', {
 // Executive deck generation endpoint
 app.http('executiveDeck', {
   methods: ['POST'],
-  route: 'api/reports/executivedeck',
+  route: 'reports/executivedeck',
   authLevel: 'anonymous', // Auth checked in handler
   handler: executiveDeckHttpTrigger
 });
@@ -585,7 +585,7 @@ app.http('executiveDeck', {
 // Support ticketing endpoint
 app.http('supportTicket', {
   methods: ['POST'],
-  route: 'api/support/ticket',
+  route: 'support/ticket',
   authLevel: 'anonymous', // Auth checked in handler
   handler: supportTicketHttpTrigger
 });
@@ -593,7 +593,7 @@ app.http('supportTicket', {
 // Billing summary endpoint
 app.http('billingSummary', {
   methods: ['GET'],
-  route: 'api/billing/summary',
+  route: 'billing/summary',
   authLevel: 'anonymous', // Auth checked in handler
   handler: billingSummaryHttpTrigger
 });
@@ -601,7 +601,7 @@ app.http('billingSummary', {
 // Continuous learning feedback endpoint
 app.http('learningFeedback', {
   methods: ['POST'],
-  route: 'api/learning/feedback',
+  route: 'learning/feedback',
   authLevel: 'anonymous', // Auth checked in handler
   handler: learningFeedbackHttpTrigger
 });
@@ -609,7 +609,7 @@ app.http('learningFeedback', {
 // Adaptive learning agents endpoint
 app.http('agentsAdaptive', {
   methods: ['POST'],
-  route: 'api/agents/adaptive',
+  route: 'agents/adaptive',
   authLevel: 'anonymous', // Auth checked in handler
   handler: agentsAdaptiveHttpTrigger
 });
@@ -617,7 +617,7 @@ app.http('agentsAdaptive', {
 // Platform architecture overview endpoint
 app.http('platformOverview', {
   methods: ['GET'],
-  route: 'api/platform/overview',
+  route: 'platform/overview',
   authLevel: 'anonymous', // Auth checked in handler
   handler: platformOverviewHttpTrigger
 });
@@ -625,7 +625,7 @@ app.http('platformOverview', {
 // Subscriptions endpoint
 app.http('subscriptions', {
   methods: ['GET', 'POST', 'DELETE'],
-  route: 'api/subscriptions/{*subId}',
+  route: 'subscriptions/{*subId}',
   authLevel: 'anonymous', // Auth checked in handler
   handler: subscriptionsHttpTrigger
 });
