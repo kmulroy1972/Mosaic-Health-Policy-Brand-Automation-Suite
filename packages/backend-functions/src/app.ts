@@ -10,7 +10,7 @@ import { templatesHttpTrigger } from './templates/httpTrigger';
 // Health check endpoint
 app.http('health', {
   methods: ['GET'],
-  route: 'api/health',
+  route: 'health',
   authLevel: 'anonymous',
   handler: healthHttpTrigger
 });
@@ -18,7 +18,7 @@ app.http('health', {
 // Templates endpoint
 app.http('templates', {
   methods: ['GET'],
-  route: 'api/templates',
+  route: 'templates',
   authLevel: 'anonymous',
   handler: templatesHttpTrigger
 });
@@ -26,7 +26,7 @@ app.http('templates', {
 // AI rewrite endpoint
 app.http('rewrite', {
   methods: ['POST'],
-  route: 'api/rewrite',
+  route: 'rewrite',
   authLevel: 'anonymous',
   handler: rewriteHttpTrigger
 });
@@ -34,7 +34,7 @@ app.http('rewrite', {
 // PDF conversion endpoint
 app.http('convertPdfA', {
   methods: ['POST'],
-  route: 'api/pdf/convert',
+  route: 'pdf/convert',
   authLevel: 'anonymous',
   handler: convertPdfAHttpTrigger
 });
@@ -42,7 +42,7 @@ app.http('convertPdfA', {
 // PDF validation endpoint
 app.http('validatePdf', {
   methods: ['POST'],
-  route: 'api/pdf/validate',
+  route: 'pdf/validate',
   authLevel: 'anonymous',
   handler: validatePdfHttpTrigger
 });
@@ -50,7 +50,7 @@ app.http('validatePdf', {
 // Brand guidance agent endpoint
 app.http('brandguidanceagent', {
   methods: ['POST'],
-  route: 'api/brandguidanceagent',
+  route: 'brandguidanceagent',
   authLevel: 'anonymous',
   handler: brandGuidanceAgentHttpTrigger
 });
