@@ -1,6 +1,7 @@
 import { app } from '@azure/functions';
 
 import { rewriteHttpTrigger } from './ai/httpTrigger';
+import { analyticsReportHttpTrigger } from './analytics/httpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
@@ -103,6 +104,14 @@ app.http('storageDownload', {
   route: 'api/storage/download',
   authLevel: 'anonymous', // Auth checked in handler
   handler: storageDownloadHttpTrigger
+});
+
+// Analytics endpoint
+app.http('analyticsReport', {
+  methods: ['GET'],
+  route: 'api/analytics/report',
+  authLevel: 'anonymous',
+  handler: analyticsReportHttpTrigger
 });
 
 // Import nightly compliance job to register timer
