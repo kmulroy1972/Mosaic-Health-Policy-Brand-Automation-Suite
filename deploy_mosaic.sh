@@ -30,9 +30,20 @@ if [ ! -d "dist" ]; then
 fi
 echo "✅ Build completed"
 
-# Step 2: Create deployment zip
+# Step 2: Install production dependencies
 echo ""
-echo "[2/4] Creating deployment package..."
+echo "[2/5] Installing production dependencies..."
+cd "${FUNCTIONS_DIR}"
+if [ -f "package-lock.json" ]; then
+  npm ci --production 2>&1 | grep -v "workspace:" || true
+elif [ -f "package.json" ]; then
+  npm install --production 2>&1 | grep -v "workspace:" || true
+fi
+echo "✅ Dependencies installed"
+
+# Step 3: Create deployment zip
+echo ""
+echo "[3/5] Creating deployment package..."
 cd "${SCRIPT_DIR}"
 
 # Remove old zip if it exists
@@ -41,14 +52,13 @@ if [ -f "${ZIP_FILE}" ]; then
   echo "   Removed existing zip file"
 fi
 
-# Create zip excluding unnecessary files
+# Create zip excluding unnecessary files (but include node_modules)
 cd "${FUNCTIONS_DIR}"
 zip -r "${ZIP_FILE}" . \
   -x "*.ts" \
   -x "*.tsbuildinfo" \
   -x "*.test.*" \
   -x "__tests__/*" \
-  -x "node_modules/*" \
   -x ".git/*" \
   -x "*.log" \
   -x ".vscode/*" \
@@ -63,9 +73,9 @@ fi
 ZIP_SIZE=$(du -h "${ZIP_FILE}" | cut -f1)
 echo "✅ Package created: ${ZIP_FILE} (${ZIP_SIZE})"
 
-# Step 3: Deploy to Azure
+# Step 4: Deploy to Azure
 echo ""
-echo "[3/4] Deploying to Azure Function App..."
+echo "[4/5] Deploying to Azure Function App..."
 echo "   Resource Group: ${RESOURCE_GROUP}"
 echo "   Function App: ${FUNCTION_APP}"
 
@@ -81,9 +91,9 @@ fi
 
 echo "✅ Deployment completed"
 
-# Step 4: Restart function app
+# Step 5: Restart function app
 echo ""
-echo "[4/4] Restarting Function App..."
+echo "[5/5] Restarting Function App..."
 az functionapp restart \
   --name "${FUNCTION_APP}" \
   --resource-group "${RESOURCE_GROUP}"
