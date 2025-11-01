@@ -10,6 +10,7 @@ import { healthHttpTrigger } from './health/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
+import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { templatesHttpTrigger } from './templates/httpTrigger';
 
 // Health check endpoint
@@ -112,6 +113,14 @@ app.http('analyticsReport', {
   route: 'api/analytics/report',
   authLevel: 'anonymous',
   handler: analyticsReportHttpTrigger
+});
+
+// System status endpoint
+app.http('systemStatus', {
+  methods: ['GET'],
+  route: 'api/system/status',
+  authLevel: 'anonymous',
+  handler: systemStatusHttpTrigger
 });
 
 // Import nightly compliance job to register timer
