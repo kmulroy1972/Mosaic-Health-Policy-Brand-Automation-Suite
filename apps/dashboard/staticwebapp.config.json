@@ -41,6 +41,6 @@
     }
   },
   "globalHeaders": {
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+    "Content-Security-Policy": "default-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://white-smoke-0061d650f.3.azurestaticapps.net https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.officeapps.live.com https://appsforoffice.microsoft.com; style-src 'self' 'unsafe-inline' https://*.officeapps.live.com; frame-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://telemetryservice.firstpartyapps.oaspapps.com; connect-src 'self' https://*.officeapps.live.com https://appsforoffice.microsoft.com https://white-smoke-0061d650f.3.azurestaticapps.net https://api.mosaicpolicy.com https://telemetryservice.firstpartyapps.oaspapps.com;"
   }
 }
