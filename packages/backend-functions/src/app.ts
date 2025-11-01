@@ -2,27 +2,46 @@ import { app } from '@azure/functions';
 
 import { rewriteHttpTrigger } from './ai/httpTrigger';
 import { analyticsReportHttpTrigger } from './analytics/httpTrigger';
+import { audioSummaryHttpTrigger } from './audio/httpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
+import { brandQAHttpTrigger } from './brand/qaHttpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
+import { briefsWorkflowHttpTrigger } from './briefs/httpTrigger';
+import { collabSessionHttpTrigger } from './collaboration/httpTrigger';
+import { complianceDashboardHttpTrigger } from './compliance/dashboardHttpTrigger';
 import { complianceLabelHttpTrigger } from './compliance/dlpHttpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
 import { costSummaryHttpTrigger } from './cost/httpTrigger';
 import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigger';
+import { ethicsCheckHttpTrigger } from './ethics/httpTrigger';
 import { experimentsReportHttpTrigger } from './experiments/httpTrigger';
+import { fundingPredictHttpTrigger } from './funding/httpTrigger';
+import { gammaExportHttpTrigger } from './gamma/httpTrigger';
+import { graphQueryHttpTrigger } from './graph/httpTrigger';
 import { redteamRunHttpTrigger } from './guardrails/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
+import { legislationTrackHttpTrigger } from './legislation/httpTrigger';
+import { mediaAssembleHttpTrigger } from './media/httpTrigger';
+import { narrativesComposeHttpTrigger } from './narratives/httpTrigger';
+import { notifySendHttpTrigger } from './notifications/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
 import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
 import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
+import { reportsGenerateHttpTrigger } from './reports/httpTrigger';
+import { scheduleReportHttpTrigger } from './scheduler/httpTrigger';
 import { brandSearchHttpTrigger } from './search/httpTrigger';
+import { semanticSearchHttpTrigger } from './search/semanticHttpTrigger';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
 import { systemStatusHttpTrigger } from './system/httpTrigger';
 import { versionHttpTrigger } from './system/versionHttpTrigger';
+import { taggingExtractHttpTrigger } from './tagging/httpTrigger';
 import { templatesHttpTrigger } from './templates/httpTrigger';
 import { tenantsConfigHttpTrigger, tenantsListHttpTrigger } from './tenants/httpTrigger';
+import { translateHttpTrigger } from './translation/httpTrigger';
 import { usersAddHttpTrigger, usersListHttpTrigger } from './users/httpTrigger';
+import { visualsChartHttpTrigger } from './visuals/httpTrigger';
 
 // Health check endpoint
 app.http('health', {
@@ -241,6 +260,158 @@ app.http('redteamRun', {
   route: 'api/redteam/run',
   authLevel: 'anonymous', // Auth checked in handler
   handler: redteamRunHttpTrigger
+});
+
+// Gamma export endpoint
+app.http('gammaExport', {
+  methods: ['POST'],
+  route: 'api/gamma/export',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: gammaExportHttpTrigger
+});
+
+// Reports generation endpoint
+app.http('reportsGenerate', {
+  methods: ['POST'],
+  route: 'api/reports/generate',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: reportsGenerateHttpTrigger
+});
+
+// Visuals/chart endpoint
+app.http('visualsChart', {
+  methods: ['POST'],
+  route: 'api/visuals/chart',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: visualsChartHttpTrigger
+});
+
+// Policy briefs workflow endpoints
+app.http('briefsWorkflow', {
+  methods: ['POST'],
+  route: 'api/briefs/{action}',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: briefsWorkflowHttpTrigger
+});
+
+// Knowledge graph query endpoint
+app.http('graphQuery', {
+  methods: ['POST'],
+  route: 'api/graph/query',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: graphQueryHttpTrigger
+});
+
+// Narrative composition endpoint
+app.http('narrativesCompose', {
+  methods: ['POST'],
+  route: 'api/narratives/compose',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: narrativesComposeHttpTrigger
+});
+
+// Audio summary endpoint
+app.http('audioSummary', {
+  methods: ['POST'],
+  route: 'api/audio/summary',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: audioSummaryHttpTrigger
+});
+
+// Media assembly endpoint
+app.http('mediaAssemble', {
+  methods: ['POST'],
+  route: 'api/media/assemble',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: mediaAssembleHttpTrigger
+});
+
+// Scheduling endpoint
+app.http('scheduleReport', {
+  methods: ['POST'],
+  route: 'api/schedule/report',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: scheduleReportHttpTrigger
+});
+
+// Tagging endpoint
+app.http('taggingExtract', {
+  methods: ['POST'],
+  route: 'api/tagging/extract',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: taggingExtractHttpTrigger
+});
+
+// Translation endpoint
+app.http('translate', {
+  methods: ['POST'],
+  route: 'api/translate',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: translateHttpTrigger
+});
+
+// Ethics check endpoint
+app.http('ethicsCheck', {
+  methods: ['POST'],
+  route: 'api/ethics/check',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: ethicsCheckHttpTrigger
+});
+
+// Notifications endpoint
+app.http('notifySend', {
+  methods: ['POST'],
+  route: 'api/notify/send',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: notifySendHttpTrigger
+});
+
+// Brand QA endpoint
+app.http('brandQA', {
+  methods: ['GET'],
+  route: 'api/brand/qa',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: brandQAHttpTrigger
+});
+
+// Funding prediction endpoint
+app.http('fundingPredict', {
+  methods: ['POST'],
+  route: 'api/funding/predict',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: fundingPredictHttpTrigger
+});
+
+// Legislation tracking endpoint
+app.http('legislationTrack', {
+  methods: ['POST'],
+  route: 'api/legislation/track',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: legislationTrackHttpTrigger
+});
+
+// Compliance dashboard v2 endpoint
+app.http('complianceDashboard', {
+  methods: ['GET'],
+  route: 'api/compliance/dashboard',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: complianceDashboardHttpTrigger
+});
+
+// Collaboration session endpoint
+app.http('collabSession', {
+  methods: ['POST'],
+  route: 'api/collab/session',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: collabSessionHttpTrigger
+});
+
+// Semantic search endpoint
+app.http('semanticSearch', {
+  methods: ['POST'],
+  route: 'api/search/query',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: semanticSearchHttpTrigger
 });
 
 // Import nightly compliance job to register timer
