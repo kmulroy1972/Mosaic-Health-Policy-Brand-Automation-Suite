@@ -8,6 +8,7 @@ import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigge
 import { healthHttpTrigger } from './health/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
+import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
 import { templatesHttpTrigger } from './templates/httpTrigger';
 
 // Health check endpoint
@@ -87,6 +88,21 @@ app.http('dataTemplates', {
   route: 'api/data/templates',
   authLevel: 'anonymous',
   handler: dataTemplatesHttpTrigger
+});
+
+// Storage endpoints
+app.http('storageUpload', {
+  methods: ['POST'],
+  route: 'api/storage/upload',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: storageUploadHttpTrigger
+});
+
+app.http('storageDownload', {
+  methods: ['GET'],
+  route: 'api/storage/download',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: storageDownloadHttpTrigger
 });
 
 // Import nightly compliance job to register timer
