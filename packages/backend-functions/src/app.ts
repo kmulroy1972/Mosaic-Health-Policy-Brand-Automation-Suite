@@ -2,6 +2,7 @@ import { app } from '@azure/functions';
 
 import { rewriteHttpTrigger } from './ai/httpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
+import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
@@ -54,3 +55,14 @@ app.http('brandguidanceagent', {
   authLevel: 'anonymous',
   handler: brandGuidanceAgentHttpTrigger
 });
+
+// Compliance validation endpoint
+app.http('complianceValidate', {
+  methods: ['POST'],
+  route: 'api/compliance/validate',
+  authLevel: 'anonymous',
+  handler: complianceValidateHttpTrigger
+});
+
+// Import nightly compliance job to register timer
+import './compliance/nightlyComplianceJob';
