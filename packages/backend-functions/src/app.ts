@@ -4,14 +4,22 @@ import { rewriteHttpTrigger } from './ai/httpTrigger';
 import { analyticsReportHttpTrigger } from './analytics/httpTrigger';
 import { authValidateHttpTrigger } from './auth/httpTrigger';
 import { brandGuidanceAgentHttpTrigger } from './brandguidanceagent/httpTrigger';
+import { complianceLabelHttpTrigger } from './compliance/dlpHttpTrigger';
 import { complianceValidateHttpTrigger } from './compliance/httpTrigger';
+import { costSummaryHttpTrigger } from './cost/httpTrigger';
 import { dataLogsHttpTrigger, dataTemplatesHttpTrigger } from './data/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
+import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
 import { convertPdfAHttpTrigger } from './pdf/convertA';
 import { validatePdfHttpTrigger } from './pdf/validate';
+import { policyBriefHttpTrigger } from './policybrief/httpTrigger';
+import { privacyDeleteHttpTrigger, privacyExportHttpTrigger } from './privacy/httpTrigger';
 import { storageDownloadHttpTrigger, storageUploadHttpTrigger } from './storage/httpTrigger';
 import { systemStatusHttpTrigger } from './system/httpTrigger';
+import { versionHttpTrigger } from './system/versionHttpTrigger';
 import { templatesHttpTrigger } from './templates/httpTrigger';
+import { tenantsConfigHttpTrigger, tenantsListHttpTrigger } from './tenants/httpTrigger';
+import { usersAddHttpTrigger, usersListHttpTrigger } from './users/httpTrigger';
 
 // Health check endpoint
 app.http('health', {
@@ -121,6 +129,91 @@ app.http('systemStatus', {
   route: 'api/system/status',
   authLevel: 'anonymous',
   handler: systemStatusHttpTrigger
+});
+
+// i18n endpoint
+app.http('i18nDetect', {
+  methods: ['GET'],
+  route: 'api/i18n/detect',
+  authLevel: 'anonymous',
+  handler: i18nDetectHttpTrigger
+});
+
+// User management endpoints
+app.http('usersList', {
+  methods: ['GET'],
+  route: 'api/users/list',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: usersListHttpTrigger
+});
+
+app.http('usersAdd', {
+  methods: ['POST'],
+  route: 'api/users/add',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: usersAddHttpTrigger
+});
+
+// Version endpoint
+app.http('version', {
+  methods: ['GET'],
+  route: 'api/version',
+  authLevel: 'anonymous',
+  handler: versionHttpTrigger
+});
+
+// Policy brief endpoint
+app.http('policyBrief', {
+  methods: ['POST'],
+  route: 'api/policybrief',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: policyBriefHttpTrigger
+});
+
+// Cost summary endpoint
+app.http('costSummary', {
+  methods: ['GET'],
+  route: 'api/cost/summary',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: costSummaryHttpTrigger
+});
+
+// Privacy endpoints
+app.http('privacyExport', {
+  methods: ['GET'],
+  route: 'api/privacy/export',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: privacyExportHttpTrigger
+});
+
+app.http('privacyDelete', {
+  methods: ['DELETE'],
+  route: 'api/privacy/delete',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: privacyDeleteHttpTrigger
+});
+
+// Tenant management endpoints
+app.http('tenantsList', {
+  methods: ['GET'],
+  route: 'api/tenants/list',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: tenantsListHttpTrigger
+});
+
+app.http('tenantsConfig', {
+  methods: ['GET'],
+  route: 'api/tenants/config',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: tenantsConfigHttpTrigger
+});
+
+// DLP/MIP labeling endpoint
+app.http('complianceLabel', {
+  methods: ['POST'],
+  route: 'api/compliance/label',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: complianceLabelHttpTrigger
 });
 
 // Import nightly compliance job to register timer
