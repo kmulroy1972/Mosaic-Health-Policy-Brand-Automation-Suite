@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "azure-cli": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"],
+      "env": {
+        "AZURE_SUBSCRIPTION_ID": "9490dc1e-7573-4ebe-8c1c-625f0db153d0",
+        "AZURE_RESOURCE_GROUP": "mhp-brand-rg"
+      }
+    }
+  }
+}
