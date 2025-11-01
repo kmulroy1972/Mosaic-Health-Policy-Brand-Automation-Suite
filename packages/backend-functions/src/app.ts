@@ -21,6 +21,7 @@ import { graphQueryHttpTrigger } from './graph/httpTrigger';
 import { redteamRunHttpTrigger } from './guardrails/httpTrigger';
 import { healthHttpTrigger } from './health/httpTrigger';
 import { i18nDetectHttpTrigger } from './i18n/httpTrigger';
+import { faqSearchHttpTrigger } from './knowledgebase/httpTrigger';
 import { legislationTrackHttpTrigger } from './legislation/httpTrigger';
 import { mediaAssembleHttpTrigger } from './media/httpTrigger';
 import { narrativesComposeHttpTrigger } from './narratives/httpTrigger';
@@ -412,6 +413,14 @@ app.http('semanticSearch', {
   route: 'api/search/query',
   authLevel: 'anonymous', // Auth checked in handler
   handler: semanticSearchHttpTrigger
+});
+
+// FAQ search endpoint
+app.http('faqSearch', {
+  methods: ['POST'],
+  route: 'api/faq/search',
+  authLevel: 'anonymous', // Auth checked in handler
+  handler: faqSearchHttpTrigger
 });
 
 // Import nightly compliance job to register timer
